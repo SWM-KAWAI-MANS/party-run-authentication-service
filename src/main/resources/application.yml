@@ -1,0 +1,8 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://root:root@localhost:27017/webflux?authSource=admin&authMechanism=SCRAM-SHA-1
+
+  mongodb:
+    embedded:
+      version: 3.5.5
