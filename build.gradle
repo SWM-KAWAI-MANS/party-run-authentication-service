@@ -43,14 +43,13 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
-    testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
+    testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo.spring30x:4.7.0'
 
     //lombok-test
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
     testAnnotationProcessor "org.projectlombok:lombok-mapstruct-binding:0.2.0"
-    testImplementation 'it.ozimov:embedded-redis:0.7.2'
 }
 
 tasks.named('test') {
