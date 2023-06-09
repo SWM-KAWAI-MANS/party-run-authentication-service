@@ -6,3 +6,9 @@ spring:
   mongodb:
     embedded:
       version: 3.5.5
+
+jwt:
+  access-secret-key: "asfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfasdfadfasdfasdfasdfa"
+  access-expire-second: 1000000
+  refresh-secret-key: "assfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfasdfadfasdfasdfasdfa"
+  refresh-expire-second: 1000000
