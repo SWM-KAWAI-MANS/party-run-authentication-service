@@ -50,6 +50,7 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
     testAnnotationProcessor "org.projectlombok:lombok-mapstruct-binding:0.2.0"
+    testImplementation 'it.ozimov:embedded-redis:0.7.2'
 }
 
 tasks.named('test') {

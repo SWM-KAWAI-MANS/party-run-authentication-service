@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import online.partyrun.jwtmanager.dto.JwtToken;
+import online.partyrun.partyrunauthenticationservice.domain.auth.dto.AccessTokenResponse;
 import online.partyrun.partyrunauthenticationservice.domain.auth.dto.IdTokenRequest;
 import online.partyrun.partyrunauthenticationservice.domain.auth.service.AuthService;
 import org.springframework.http.HttpStatus;
@@ -23,8 +24,9 @@ public class AuthController {
     public ResponseEntity<JwtToken> login(@RequestBody IdTokenRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(authService.authorize(request.idToken()));
     }
-//
-//    @PostMapping("access")
-//    public ResponseEntity<AccessToken>
 
+    @PostMapping("access")
+    public ResponseEntity<AccessTokenResponse> refreshAccessToken(@RequestHeader("Refresh-Token") String refreshToken) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(authService.refreshAccessToken(refreshToken));
+    }
 }

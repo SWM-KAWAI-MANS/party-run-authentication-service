@@ -9,10 +9,15 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import online.partyrun.jwtmanager.JwtGenerator;
 import online.partyrun.jwtmanager.dto.JwtToken;
+import online.partyrun.partyrunauthenticationservice.domain.auth.dto.AccessTokenResponse;
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberRequest;
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberResponse;
 import online.partyrun.partyrunauthenticationservice.domain.member.service.MemberService;
+import online.partyrun.partyrunauthenticationservice.domain.token.entity.RefreshToken;
+import online.partyrun.partyrunauthenticationservice.domain.token.repository.RefreshTokenRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.NoSuchElementException;
 
 @Slf4j
 @Service
@@ -22,12 +27,16 @@ public class FirebaseAuthService implements AuthService {
     MemberService memberService;
     FirebaseAuth firebaseAuth;
     JwtGenerator jwtGenerator;
+    RefreshTokenRepository refreshTokenRepository;
 
     @Override
     public JwtToken authorize(String idToken) {
-            FirebaseToken firebaseToken = getFirebaseToken(idToken);
-            MemberResponse member = memberService.getMember(new MemberRequest(firebaseToken.getUid(), firebaseToken.getName()));
-            return jwtGenerator.generate(member.id());
+        final FirebaseToken firebaseToken = getFirebaseToken(idToken);
+        final MemberResponse member = memberService.getMember(new MemberRequest(firebaseToken.getUid(), firebaseToken.getName()));
+        final JwtToken jwtToken = jwtGenerator.generate(member.id());
+        final RefreshToken refreshToken = new RefreshToken(jwtToken.refreshToken(), member.id());
+        refreshTokenRepository.save(refreshToken);
+        return jwtToken;
     }
 
     private FirebaseToken getFirebaseToken(String idToken) {
@@ -37,4 +46,13 @@ public class FirebaseAuthService implements AuthService {
             throw new IllegalArgumentException(e);
         }
     }
+
+    @Override
+    public AccessTokenResponse refreshAccessToken(String refreshToken) {
+        if(!refreshTokenRepository.existsById(refreshToken)) {
+            throw new NoSuchElementException();
+        }
+        return new AccessTokenResponse(jwtGenerator.generateAccessToken(refreshToken));
+    }
+
 }
