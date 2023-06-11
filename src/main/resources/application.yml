@@ -2,15 +2,13 @@ spring:
   data:
     redis:
       host: localhost
+      port: 6379
 
 de:
   flapdoodle:
     mongodb:
       embedded:
         version: 5.0.5
-    redis:
-      embedded:
-        version: 3.2.1
 jwt:
   access-secret-key: "asfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfasdfadfasdfasdfasdfa"
   access-expire-second: 1000000

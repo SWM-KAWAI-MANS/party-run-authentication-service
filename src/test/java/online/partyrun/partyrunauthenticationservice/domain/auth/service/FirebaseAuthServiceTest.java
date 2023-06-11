@@ -1,5 +1,6 @@
 package online.partyrun.partyrunauthenticationservice.domain.auth.service;
 
+import online.partyrun.partyrunauthenticationservice.config.RedisTestConfig;
 import online.partyrun.partyrunauthenticationservice.domain.auth.service.firebase.FirebaseAuthService;
 import online.partyrun.partyrunauthenticationservice.domain.auth.service.firebase.FirebaseHandler;
 import online.partyrun.partyrunauthenticationservice.domain.auth.service.firebase.TokenResponse;
@@ -8,21 +9,21 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 
 import static org.mockito.BDDMockito.given;
 
 @SpringBootTest
 @DisplayName("FirebaseAuthService")
+@Import(RedisTestConfig.class)
 class FirebaseAuthServiceTest {
     @MockBean
     FirebaseHandler firebaseHandler;
 
     @Autowired
     FirebaseAuthService firebaseAuthService;
-
     String idToken = "idToken";
     String name = "박현준";
-
 
     @Nested
     @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
