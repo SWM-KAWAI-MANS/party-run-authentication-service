@@ -1,4 +1,6 @@
 package online.partyrun.partyrunauthenticationservice.domain.auth.dto;
 
-public record IdTokenRequest(String idToken) {
+import jakarta.validation.constraints.NotNull;
+
+public record IdTokenRequest(@NotNull String idToken) {
 }
