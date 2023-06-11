@@ -1,4 +1,4 @@
-package online.partyrun.partyrunauthenticationservice.config;
+package online.partyrun.partyrunauthenticationservice.global.config;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
