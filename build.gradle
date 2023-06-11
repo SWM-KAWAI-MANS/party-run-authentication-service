@@ -44,6 +44,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo.spring30x:4.7.0'
+    testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.redis:1.11.4'
 
     //lombok-test
     testCompileOnly 'org.projectlombok:lombok'
