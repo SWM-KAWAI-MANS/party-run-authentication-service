@@ -44,7 +44,9 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo.spring30x:4.7.0'
-    testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.redis:1.11.4'
+    testImplementation ('it.ozimov:embedded-redis:0.7.3') {
+        exclude group: 'org.slf4j', module: 'slf4j-simple'
+    }
 
     //lombok-test
     testCompileOnly 'org.projectlombok:lombok'
