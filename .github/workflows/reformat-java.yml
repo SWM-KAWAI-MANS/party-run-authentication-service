@@ -1,0 +1,12 @@
+name: backend - reformat-java
+on: [push, pull_request, pull_request_review]
+
+jobs:
+  replace-google-format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: axel-op/googlejavaformat-action@v3
+        with:
+          commit-messaage: 'style : Google Java Format'
+          args: '--replace --aosp'
