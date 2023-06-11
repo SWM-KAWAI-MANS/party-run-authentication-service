@@ -43,5 +43,4 @@ public class FirebaseAuthService implements AuthService {
         }
         return new AccessTokenResponse(jwtGenerator.generateAccessToken(refreshToken));
     }
-
 }
