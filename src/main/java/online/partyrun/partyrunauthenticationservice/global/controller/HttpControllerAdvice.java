@@ -6,6 +6,8 @@ import online.partyrun.partyrunauthenticationservice.global.exception.InternalSe
 import online.partyrun.partyrunauthenticationservice.global.exception.UnAuthorizedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindException;
+import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -29,5 +31,11 @@ public class HttpControllerAdvice {
     public ResponseEntity<ExceptionResponse> handleInternalServerErrorException(Exception exception) {
         log.error(exception.getMessage());
         return ResponseEntity.internalServerError().body(new ExceptionResponse("알 수 없는 에러입니다."));
+    }
+
+    @ExceptionHandler({BindException.class, MissingRequestHeaderException.class})
+    public ResponseEntity<ExceptionResponse> handleBindException(BindException exception) {
+        log.error(exception.getMessage());
+        return ResponseEntity.badRequest().body(new ExceptionResponse("질못된 요청입니다"));
     }
 }
