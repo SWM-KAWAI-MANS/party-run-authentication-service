@@ -1,5 +1,6 @@
 package online.partyrun.partyrunauthenticationservice.domain.token.entity;
 
+import online.partyrun.partyrunauthenticationservice.domain.token.exception.EmptyStringException;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EmptySource;
@@ -35,7 +36,7 @@ class RefreshTokenTest {
         @DisplayName("예외를 반환한다.")
         void throwException(String invalidValue) {
             assertThatThrownBy(() -> new RefreshToken(invalidValue, memberId))
-                    .isInstanceOf(IllegalArgumentException.class);
+                    .isInstanceOf(EmptyStringException.class);
         }
     }
 
@@ -49,7 +50,7 @@ class RefreshTokenTest {
         @DisplayName("예외를 반환한다.")
         void throwException(String memberId) {
             assertThatThrownBy(() -> new RefreshToken(value, memberId))
-                    .isInstanceOf(IllegalArgumentException.class);
+                    .isInstanceOf(EmptyStringException.class);
         }
     }
 }
