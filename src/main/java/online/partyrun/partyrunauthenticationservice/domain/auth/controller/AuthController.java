@@ -1,5 +1,6 @@
 package online.partyrun.partyrunauthenticationservice.domain.auth.controller;
 
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -21,7 +22,7 @@ public class AuthController {
     AuthService authService;
 
     @PostMapping
-    public ResponseEntity<JwtToken> login(@RequestBody IdTokenRequest request) {
+    public ResponseEntity<JwtToken> login(@RequestBody @Valid IdTokenRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(authService.authorize(request.idToken()));
     }
 
