@@ -1,11 +1,16 @@
 package online.partyrun.partyrunauthenticationservice.domain.auth.service;
 
+import online.partyrun.jwtmanager.JwtGenerator;
 import online.partyrun.jwtmanager.dto.JwtToken;
 import online.partyrun.partyrunauthenticationservice.config.RedisTestConfig;
+import online.partyrun.partyrunauthenticationservice.domain.auth.dto.AccessTokenResponse;
 import online.partyrun.partyrunauthenticationservice.domain.auth.exception.IllegalIdTokenException;
+import online.partyrun.partyrunauthenticationservice.domain.auth.exception.NoSuchRefreshTokenException;
 import online.partyrun.partyrunauthenticationservice.domain.auth.service.firebase.FirebaseAuthService;
 import online.partyrun.partyrunauthenticationservice.domain.auth.service.firebase.FirebaseHandler;
 import online.partyrun.partyrunauthenticationservice.domain.auth.service.firebase.TokenResponse;
+import online.partyrun.partyrunauthenticationservice.domain.token.entity.RefreshToken;
+import online.partyrun.partyrunauthenticationservice.domain.token.repository.RefreshTokenRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,8 +31,16 @@ class FirebaseAuthServiceTest {
 
     @Autowired
     FirebaseAuthService firebaseAuthService;
+
+    @Autowired
+    JwtGenerator jwtGenerator;
+
+    @Autowired
+    RefreshTokenRepository refreshTokenRepository;
+
     String idToken = "idToken";
     String name = "박현준";
+    String jwtTokenRegex = "^([A-Za-z0-9-_=]+\\.[A-Za-z0-9-_=]+\\.?[A-Za-z0-9-_.+/=]*)?$";
 
     @Nested
     @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -37,8 +50,6 @@ class FirebaseAuthServiceTest {
         @DisplayName("jwtToken을 반환한다.")
         void returnJwtToken() {
             given(firebaseHandler.verifyIdToken(idToken)).willReturn(new TokenResponse(idToken, name));
-            String jwtTokenRegex = "^([A-Za-z0-9-_=]+\\.[A-Za-z0-9-_=]+\\.?[A-Za-z0-9-_.+/=]*)?$";
-
             JwtToken jwtToken = firebaseAuthService.authorize(idToken);
             assertAll(
                     () -> assertThat(jwtToken.accessToken()).matches(jwtTokenRegex),
@@ -58,6 +69,37 @@ class FirebaseAuthServiceTest {
             given(firebaseHandler.verifyIdToken(invalidIdToken)).willThrow(IllegalIdTokenException.class);
             assertThatThrownBy(() -> firebaseAuthService.authorize(invalidIdToken))
                     .isInstanceOf(IllegalIdTokenException.class);
+        }
+    }
+
+    @Nested
+    @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+    class refreshToken이_주어지면 {
+
+        String refreshToken = jwtGenerator.generate(idToken).refreshToken();
+
+        @Test
+        @DisplayName("accessToken을 반환한다.")
+        void returnAccessToken() {
+            refreshTokenRepository.save(new RefreshToken(refreshToken, name));
+
+            AccessTokenResponse result = firebaseAuthService.refreshAccessToken(refreshToken);
+
+            assertThat(result.accessToken()).matches(jwtTokenRegex);
+        }
+    }
+
+    @Nested
+    @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+    class 존재하지_않는_refreshToken이_주어지면 {
+
+        String invalidRefreshToken = "invalidRefreshToken";
+
+        @Test
+        @DisplayName("예외를 던진다")
+        void throwExceptions() {
+            assertThatThrownBy(() -> firebaseAuthService.refreshAccessToken(invalidRefreshToken))
+                    .isInstanceOf(NoSuchRefreshTokenException.class);
         }
     }
 }
