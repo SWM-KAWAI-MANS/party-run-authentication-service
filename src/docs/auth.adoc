@@ -1,0 +1,20 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+
+== Auth
+=== 로그인
+operation::success login[snippets='http-request,http-response']
+=== 로그인시 idToken이 null
+operation::idToken is null[snippets='http-request,http-response']
+=== 로그인시 idToken 형식이 잘못됨
+operation::idToken is invalid[snippets='http-request,http-response']
+=== access token 재발급
+operation::refresh token[snippets='http-request,http-response']
+=== access token 재발급시 refresh token이 null
+operation::refresh token is null[snippets='http-request,http-response']
+=== access token 재발급시 refresh token 형식이 잘못됨
+operation::refresh token is invalid[snippets='http-request,http-response']
+
