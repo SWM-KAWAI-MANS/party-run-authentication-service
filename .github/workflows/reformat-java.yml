@@ -1,0 +1,18 @@
+name: backend - reformat-java
+on: [push, pull_request, pull_request_review]
+
+jobs:
+  replace-google-format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: axel-op/googlejavaformat-action@v3
+        with:
+          commit-message: 'style : Google Java Format ${{ github.head_ref }}'
+          args: '--replace --aosp \
+           --add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED \
+           --add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED \
+           --add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED \
+           --add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED \
+           --add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED \
+           --add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED'
