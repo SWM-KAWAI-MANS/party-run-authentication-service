@@ -1,7 +1,4 @@
-# test
 spring:
-  profiles:
-    active: test
   data:
     redis:
       host: localhost
@@ -18,7 +15,6 @@ jwt:
   access-expire-second: 1000000
   refresh-secret-key: "assfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasads"
   refresh-expire-second: 2000000
-
 ---
 spring:
   config:
