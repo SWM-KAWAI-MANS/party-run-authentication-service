@@ -5,5 +5,5 @@
 :toclevels: 4
 :sectlinks:
 
-= CREW-SHIP API
+= API
 include::auth.adoc[]

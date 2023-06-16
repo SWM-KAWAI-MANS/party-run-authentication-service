@@ -21,38 +21,19 @@ public class RedisTestConfig {
 
     @PostConstruct
     public void redisServer() throws IOException {
-        int port = isRedisRunning()? findAvailablePort() : redisPort;
+        int port = getPort();
         redisServer = new RedisServer(port);
         redisServer.start();
     }
 
-    @PreDestroy
-    public void stopRedis() {
-        if (redisServer != null) {
-            redisServer.stop();
-        }
-    }
+    private int getPort() throws IOException {
+        final Process redisProcess = executeGrepProcessCommand(redisPort);
 
-    /**
-     * Embedded Redis가 현재 실행중인지 확인
-     */
-    private boolean isRedisRunning() throws IOException {
-        return isRunning(executeGrepProcessCommand(redisPort));
-    }
-
-    /**
-     * 현재 PC/서버에서 사용가능한 포트 조회
-     */
-    public int findAvailablePort() throws IOException {
-
-        for (int port = 10000; port <= 65535; port++) {
-            Process process = executeGrepProcessCommand(port);
-            if (!isRunning(process)) {
-                return port;
-            }
+        if (isRunning(redisProcess)) {
+            return findAvailablePort();
         }
 
-        throw new IllegalArgumentException("Not Found Available port: 10000 ~ 65535");
+        return redisPort;
     }
 
     /**
@@ -81,5 +62,27 @@ public class RedisTestConfig {
         }
 
         return StringUtils.hasText(pidInfo.toString());
+    }
+
+    /**
+     * 현재 PC/서버에서 사용가능한 포트 조회
+     */
+    private int findAvailablePort() throws IOException {
+
+        for (int port = 10000; port <= 65535; port++) {
+            Process process = executeGrepProcessCommand(port);
+            if (!isRunning(process)) {
+                return port;
+            }
+        }
+
+        throw new IllegalArgumentException("Not Found Available port: 10000 ~ 65535");
+    }
+
+    @PreDestroy
+    public void stopRedis() {
+        if (redisServer != null) {
+            redisServer.stop();
+        }
     }
 }
