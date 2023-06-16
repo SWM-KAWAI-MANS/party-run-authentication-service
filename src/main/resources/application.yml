@@ -1,11 +1,11 @@
-# test
 spring:
-  profiles:
-    active: test
   data:
     redis:
       host: localhost
       port: 6379
+
+firebase:
+  secret: ${FIREBASE_SECRET}
 
 de:
   flapdoodle:
@@ -18,7 +18,6 @@ jwt:
   access-expire-second: 1000000
   refresh-secret-key: "assfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasads"
   refresh-expire-second: 2000000
-
 ---
 spring:
   config:

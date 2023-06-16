@@ -1,5 +1,10 @@
 package online.partyrun.partyrunauthenticationservice.domain.auth.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.BDDMockito.given;
+
 import online.partyrun.jwtmanager.JwtGenerator;
 import online.partyrun.jwtmanager.dto.JwtToken;
 import online.partyrun.partyrunauthenticationservice.config.RedisTestConfig;
@@ -11,32 +16,24 @@ import online.partyrun.partyrunauthenticationservice.domain.auth.service.firebas
 import online.partyrun.partyrunauthenticationservice.domain.auth.service.firebase.TokenResponse;
 import online.partyrun.partyrunauthenticationservice.domain.token.entity.RefreshToken;
 import online.partyrun.partyrunauthenticationservice.domain.token.repository.RefreshTokenRepository;
+
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.mockito.BDDMockito.given;
-
 @SpringBootTest
 @DisplayName("FirebaseAuthService")
 @Import(RedisTestConfig.class)
 class FirebaseAuthServiceTest {
-    @MockBean
-    FirebaseHandler firebaseHandler;
+    @MockBean FirebaseHandler firebaseHandler;
 
-    @Autowired
-    FirebaseAuthService firebaseAuthService;
+    @Autowired FirebaseAuthService firebaseAuthService;
 
-    @Autowired
-    JwtGenerator jwtGenerator;
+    @Autowired JwtGenerator jwtGenerator;
 
-    @Autowired
-    RefreshTokenRepository refreshTokenRepository;
+    @Autowired RefreshTokenRepository refreshTokenRepository;
 
     String idToken = "idToken";
     String name = "박현준";
@@ -49,12 +46,12 @@ class FirebaseAuthServiceTest {
         @Test
         @DisplayName("jwtToken을 반환한다.")
         void returnJwtToken() {
-            given(firebaseHandler.verifyIdToken(idToken)).willReturn(new TokenResponse(idToken, name));
+            given(firebaseHandler.verifyIdToken(idToken))
+                    .willReturn(new TokenResponse(idToken, name));
             JwtToken jwtToken = firebaseAuthService.authorize(idToken);
             assertAll(
                     () -> assertThat(jwtToken.accessToken()).matches(jwtTokenRegex),
-                    () -> assertThat(jwtToken.refreshToken()).matches(jwtTokenRegex)
-            );
+                    () -> assertThat(jwtToken.refreshToken()).matches(jwtTokenRegex));
         }
     }
 
@@ -66,7 +63,8 @@ class FirebaseAuthServiceTest {
         @Test
         @DisplayName("예외를 던진다.")
         void returnJwtToken() {
-            given(firebaseHandler.verifyIdToken(invalidIdToken)).willThrow(IllegalIdTokenException.class);
+            given(firebaseHandler.verifyIdToken(invalidIdToken))
+                    .willThrow(IllegalIdTokenException.class);
             assertThatThrownBy(() -> firebaseAuthService.authorize(invalidIdToken))
                     .isInstanceOf(IllegalIdTokenException.class);
         }

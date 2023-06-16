@@ -1,6 +1,7 @@
 package online.partyrun.partyrunauthenticationservice.domain.member.repository;
 
 import online.partyrun.partyrunauthenticationservice.domain.member.entity.Member;
+
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
