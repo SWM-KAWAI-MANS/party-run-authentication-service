@@ -25,15 +25,14 @@ public class AuthController {
     AuthService authService;
 
     @PostMapping
-    public ResponseEntity<JwtToken> login(@RequestBody @Valid IdTokenRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(authService.authorize(request.idToken()));
+    @ResponseStatus(HttpStatus.CREATED)
+    public JwtToken login(@RequestBody @Valid IdTokenRequest request) {
+        return authService.authorize(request.idToken());
     }
 
     @PostMapping("access")
-    public ResponseEntity<AccessTokenResponse> refreshAccessToken(
-            @RequestHeader("Refresh-Token") String refreshToken) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(authService.refreshAccessToken(refreshToken));
+    @ResponseStatus(HttpStatus.CREATED)
+    public AccessTokenResponse refreshAccessToken(@RequestHeader("Refresh-Token") String refreshToken) {
+        return authService.refreshAccessToken(refreshToken);
     }
 }
