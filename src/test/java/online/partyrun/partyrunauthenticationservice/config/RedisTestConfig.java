@@ -2,9 +2,11 @@ package online.partyrun.partyrunauthenticationservice.config;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.util.StringUtils;
+
 import redis.embedded.RedisServer;
 
 import java.io.BufferedReader;
@@ -36,23 +38,20 @@ public class RedisTestConfig {
         return redisPort;
     }
 
-    /**
-     * 해당 port를 사용중인 프로세스 확인하는 sh 실행
-     */
+    /** 해당 port를 사용중인 프로세스 확인하는 sh 실행 */
     private Process executeGrepProcessCommand(int port) throws IOException {
         String command = String.format("netstat -nat | grep LISTEN|grep %d", port);
         String[] shell = {"/bin/sh", "-c", command};
         return Runtime.getRuntime().exec(shell);
     }
 
-    /**
-     * 해당 Process가 현재 실행중인지 확인
-     */
+    /** 해당 Process가 현재 실행중인지 확인 */
     private boolean isRunning(Process process) {
         String line;
         StringBuilder pidInfo = new StringBuilder();
 
-        try (BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+        try (BufferedReader input =
+                new BufferedReader(new InputStreamReader(process.getInputStream()))) {
 
             while ((line = input.readLine()) != null) {
                 pidInfo.append(line);
@@ -64,9 +63,7 @@ public class RedisTestConfig {
         return StringUtils.hasText(pidInfo.toString());
     }
 
-    /**
-     * 현재 PC/서버에서 사용가능한 포트 조회
-     */
+    /** 현재 PC/서버에서 사용가능한 포트 조회 */
     private int findAvailablePort() throws IOException {
 
         for (int port = 10000; port <= 65535; port++) {

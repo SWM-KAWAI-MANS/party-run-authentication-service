@@ -3,9 +3,11 @@ package online.partyrun.partyrunauthenticationservice.domain.auth.service.fireba
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+
 import online.partyrun.partyrunauthenticationservice.domain.auth.exception.IllegalIdTokenException;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)

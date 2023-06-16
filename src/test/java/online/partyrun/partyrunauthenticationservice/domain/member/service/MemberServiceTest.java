@@ -1,29 +1,27 @@
 package online.partyrun.partyrunauthenticationservice.domain.member.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberRequest;
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberResponse;
 import online.partyrun.partyrunauthenticationservice.domain.member.entity.Member;
 import online.partyrun.partyrunauthenticationservice.domain.member.repository.MemberRepository;
+
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-
 @SpringBootTest
 @DisplayName("MemberService")
 class MemberServiceTest {
 
-    @Autowired
-    MemberService memberService;
+    @Autowired MemberService memberService;
 
-    @Autowired
-    MongoTemplate mongoTemplate;
+    @Autowired MongoTemplate mongoTemplate;
 
-    @Autowired
-    MemberRepository memberRepository;
+    @Autowired MemberRepository memberRepository;
 
     String authId = "authId";
     String name = "박현준";
@@ -46,8 +44,7 @@ class MemberServiceTest {
             assertAll(
                     () -> assertThat(response.id()).isNotNull(),
                     () -> assertThat(response.authId()).isEqualTo(member.getAuthId()),
-                    () -> assertThat(response.name()).isEqualTo(member.getName())
-            );
+                    () -> assertThat(response.name()).isEqualTo(member.getName()));
         }
     }
 
@@ -62,8 +59,7 @@ class MemberServiceTest {
             assertAll(
                     () -> assertThat(response.id()).isNotNull(),
                     () -> assertThat(response.authId()).isEqualTo(memberRequest.authId()),
-                    () -> assertThat(response.name()).isEqualTo(memberRequest.name())
-            );
+                    () -> assertThat(response.name()).isEqualTo(memberRequest.name()));
         }
     }
 }

@@ -5,5 +5,6 @@ import online.partyrun.partyrunauthenticationservice.domain.auth.dto.AccessToken
 
 public interface AuthService {
     JwtToken authorize(String token);
+
     AccessTokenResponse refreshAccessToken(String refreshToken);
 }
