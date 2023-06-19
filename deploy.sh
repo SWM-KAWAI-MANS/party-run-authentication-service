@@ -23,8 +23,8 @@ else
   sleep 5
 fi
 
-OLD_JAR_NAME=$(ls -tr $REPOSITORY_DEPLOYMENT_GROUP_NAME/zip/build/libs/*.jar | tail -n 1)
-JAR_NAME=$REPOSITORY_DEPLOYMENT_GROUP_NAME/zip/build/libs/party-run-authentication-service-dev.jar
+OLD_JAR_NAME=$(ls -tr $REPOSITORY_DEPLOYMENT_GROUP_NAME/build/libs/*.jar | tail -n 1)
+JAR_NAME=$REPOSITORY_DEPLOYMENT_GROUP_NAME/build/libs/party-run-authentication-service-dev.jar
 
 mv $OLD_JAR_NAME $JAR_NAME
 echo "> JAR Name 변경: $OLD_JAR_NAME >> $JAR_NAME"
