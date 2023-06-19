@@ -6,7 +6,7 @@ REPOSITORY_DEPLOYMENT_GROUP_NAME=/home/ec2-user/party-run/$DEPLOYMENT_GROUP_NAME
 echo "> 환경변수 불러오기"
 source ~/.bashrc
 
-echo "> 기존의 $REPOSITORY_DEPLOYMENT_GROUP_NAME/zip 폴더 삭제"
+echo "> 기존의 $REPOSITORY_DEPLOYMENT_GROUP_NAME 폴더 삭제"
 rm -r $REPOSITORY_DEPLOYMENT_GROUP_NAME
 
 echo "> 설치된 프로젝트 폴더 이동"
