@@ -9,6 +9,10 @@ group = 'online.partyrun'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
+jar {
+    enabled = false
+}
+
 repositories {
     mavenCentral()
     maven { url 'https://jitpack.io' }
@@ -61,6 +65,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.google.firebase:firebase-admin:9.1.1'
     implementation 'com.github.SWM-KAWAI-MANS:jwt-manager:1.0.0'
+    implementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo.spring30x:4.7.0'
 
     //lombok
     compileOnly 'org.projectlombok:lombok'
@@ -74,7 +79,6 @@ dependencies {
     asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo.spring30x:4.7.0'
     testImplementation ('it.ozimov:embedded-redis:0.7.3') {
         exclude group: 'org.slf4j', module: 'slf4j-simple'
     }
