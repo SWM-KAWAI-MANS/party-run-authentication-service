@@ -1,18 +1,18 @@
 #! /bin/bash
 
 REPOSITORY=/home/ec2-user/party-run/zip
-REPOSITORY_DEPLOYMENT_GROUP_NAME=$REPOSITORY/$DEPLOYMENT_GROUP_NAME
+REPOSITORY_DEPLOYMENT_GROUP_NAME=/home/ec2-user/party-run/$DEPLOYMENT_GROUP_NAME
 
 echo "> 환경변수 불러오기"
 source ~/.bashrc
 
 echo "> 기존의 $REPOSITORY_DEPLOYMENT_GROUP_NAME/zip 폴더 삭제"
-rm -r $REPOSITORY_DEPLOYMENT_GROUP_NAME/zip
+rm -r $REPOSITORY_DEPLOYMENT_GROUP_NAME
 
 echo "> 설치된 프로젝트 폴더 이동"
-mv $REPOSITORY $REPOSITORY_DEPLOYMENT_GROUP_NAME/zip
+mv $REPOSITORY $REPOSITORY_DEPLOYMENT_GROUP_NAME
 
-echo "> 현재 구동 중인 $DEPLOYMENT_GROUP_NAME 애플리케이션 pid 확인"
+echo "> 현재 구동 중인 party-run-authentication-service-dev 애플리케이션 pid 확인"
 CURRENT_PID=$(pgrep -fl party-run-authentication-service-dev.jar | awk '{print $1}')
 
 if [ -z "$CURRENT_PID" ]; then
