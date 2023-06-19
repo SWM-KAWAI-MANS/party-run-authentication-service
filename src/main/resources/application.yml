@@ -26,18 +26,10 @@ spring:
 
   data:
     mongodb:
-      host: ${DB_HOST}
-      port: ${DB_PORT}
-      database: ${DB_DATABASE}
-      username: ${DB_USERNAME}
-      password: ${DB_PASSWORD}
-      authentication-database: ${DB_AUTH_SOURCE}
-
+      uri: ${DB_URI}
     redis:
       host: ${REDIS_HOST}
       port: ${REDIS_PORT}
-      password: ${REDIS_PASSWORD}
-      database: ${REDIS_DATABASE}
 
 jwt:
   access-secret-key: ${JWT_ACCESS_SECRET_KEY}
