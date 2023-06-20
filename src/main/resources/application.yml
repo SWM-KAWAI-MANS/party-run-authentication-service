@@ -1,4 +1,7 @@
 spring:
+  profiles:
+    active: test
+
   data:
     redis:
       host: localhost
@@ -18,7 +21,9 @@ jwt:
   access-expire-second: 1000000
   refresh-secret-key: "assfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasads"
   refresh-expire-second: 2000000
+
 ---
+
 spring:
   config:
     activate:
@@ -26,18 +31,9 @@ spring:
 
   data:
     mongodb:
-      host: ${DB_HOST}
-      port: ${DB_PORT}
-      database: ${DB_DATABASE}
-      username: ${DB_USERNAME}
-      password: ${DB_PASSWORD}
-      authentication-database: ${DB_AUTH_SOURCE}
-
+      uri: ${DB_URI}
     redis:
-      host: ${REDIS_HOST}
-      port: ${REDIS_PORT}
-      password: ${REDIS_PASSWORD}
-      database: ${REDIS_DATABASE}
+      url: ${REDIS_URL}
 
 jwt:
   access-secret-key: ${JWT_ACCESS_SECRET_KEY}
