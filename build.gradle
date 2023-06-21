@@ -58,9 +58,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.google.firebase:firebase-admin:9.1.1'
-    implementation 'com.github.SWM-KAWAI-MANS:jwt-manager:1.0.0'
+    implementation 'com.github.SWM-KAWAI-MANS:jwt-manager:1.2.0-alpha'
 
     //lombok
     compileOnly 'org.projectlombok:lombok'
@@ -68,16 +69,14 @@ dependencies {
 
     //mapstruct
     implementation 'org.mapstruct:mapstruct:1.5.1.Final'
+    implementation 'com.github.SWM-KAWAI-MANS:spring-security-authorization-manager:0.0.6-alpha'
+    testImplementation 'com.github.SWM-KAWAI-MANS:test-manager:0.0.10-alpha'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
     annotationProcessor "org.projectlombok:lombok-mapstruct-binding:0.2.0"
 
     asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
-    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    //testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo.spring30x:4.7.0'
-    testImplementation ('it.ozimov:embedded-redis:0.7.3') {
-        exclude group: 'org.slf4j', module: 'slf4j-simple'
-    }
 
     //lombok-test
     testCompileOnly 'org.projectlombok:lombok'

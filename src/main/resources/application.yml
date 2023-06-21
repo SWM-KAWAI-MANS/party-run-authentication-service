@@ -7,11 +7,9 @@ spring:
 firebase:
   secret: ${FIREBASE_SECRET}
 
-de:
-  flapdoodle:
-    mongodb:
-      embedded:
-        version: 5.0.5
+auth:
+  filter:
+    exclusions: "auth"
 
 jwt:
   access-secret-key: "asfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasd"
