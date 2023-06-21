@@ -1,5 +1,10 @@
 package online.partyrun.partyrunauthenticationservice.domain.auth.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.BDDMockito.given;
+
 import online.partyrun.jwtmanager.JwtGenerator;
 import online.partyrun.jwtmanager.dto.JwtToken;
 import online.partyrun.partyrunauthenticationservice.domain.auth.exception.IllegalIdTokenException;
@@ -11,17 +16,13 @@ import online.partyrun.partyrunauthenticationservice.domain.member.entity.Role;
 import online.partyrun.partyrunauthenticationservice.domain.token.entity.RefreshToken;
 import online.partyrun.partyrunauthenticationservice.domain.token.repository.RefreshTokenRepository;
 import online.partyrun.testmanager.redis.EnableRedisTest;
+
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Set;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.mockito.BDDMockito.given;
 
 @SpringBootTest
 @DisplayName("FirebaseAuthService")
@@ -74,7 +75,8 @@ class FirebaseAuthServiceTest {
     @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
     class refreshToken이_주어지면 {
 
-        String refreshToken = jwtGenerator.generate(idToken, Set.of(Role.ROLE_USER.name())).refreshToken();
+        String refreshToken =
+                jwtGenerator.generate(idToken, Set.of(Role.ROLE_USER.name())).refreshToken();
 
         @Test
         @DisplayName("accessToken을 반환한다.")
@@ -84,9 +86,7 @@ class FirebaseAuthServiceTest {
             JwtToken result = firebaseAuthService.refreshAccessToken(refreshToken);
             assertAll(
                     () -> assertThat(result.accessToken()).matches(jwtTokenRegex),
-                    () -> assertThat(result.refreshToken()).matches(jwtTokenRegex)
-            );
-
+                    () -> assertThat(result.refreshToken()).matches(jwtTokenRegex));
         }
     }
 

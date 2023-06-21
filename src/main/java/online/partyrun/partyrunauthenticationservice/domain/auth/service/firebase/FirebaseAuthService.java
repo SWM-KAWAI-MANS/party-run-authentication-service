@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+
 import online.partyrun.jwtmanager.JwtGenerator;
 import online.partyrun.jwtmanager.dto.JwtToken;
 import online.partyrun.partyrunauthenticationservice.domain.auth.exception.NoSuchRefreshTokenException;
@@ -13,6 +14,7 @@ import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberRes
 import online.partyrun.partyrunauthenticationservice.domain.member.service.MemberService;
 import online.partyrun.partyrunauthenticationservice.domain.token.entity.RefreshToken;
 import online.partyrun.partyrunauthenticationservice.domain.token.repository.RefreshTokenRepository;
+
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -36,7 +38,6 @@ public class FirebaseAuthService implements AuthService {
         refreshTokenRepository.save(refreshToken);
         return jwtToken;
     }
-
 
     @Override
     public JwtToken refreshAccessToken(String refreshToken) {
