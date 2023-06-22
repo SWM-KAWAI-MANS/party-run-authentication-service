@@ -9,6 +9,10 @@ group = 'online.partyrun'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
+jar {
+    enabled = false
+}
+
 repositories {
     mavenCentral()
     maven { url 'https://jitpack.io' }
@@ -76,6 +80,7 @@ dependencies {
 
     asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
 
     //lombok-test
     testCompileOnly 'org.projectlombok:lombok'
