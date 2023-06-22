@@ -62,7 +62,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.google.firebase:firebase-admin:9.1.1'
     implementation 'com.github.SWM-KAWAI-MANS:jwt-manager:1.2.0'
@@ -73,7 +72,6 @@ dependencies {
 
     //mapstruct
     implementation 'org.mapstruct:mapstruct:1.5.1.Final'
-    implementation 'com.github.SWM-KAWAI-MANS:spring-security-authorization-manager:1.0.0'
     testImplementation 'com.github.SWM-KAWAI-MANS:test-manager:1.0.0'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
     annotationProcessor "org.projectlombok:lombok-mapstruct-binding:0.2.0"

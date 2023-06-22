@@ -13,10 +13,6 @@ spring:
 firebase:
   secret: ${FIREBASE_SECRET}
 
-auth:
-  filter:
-    exclusions: "auth"
-
 jwt:
   access-secret-key: "asfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasd"
   access-expire-second: 1000000
