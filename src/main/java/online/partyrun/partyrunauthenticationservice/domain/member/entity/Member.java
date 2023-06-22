@@ -3,11 +3,9 @@ package online.partyrun.partyrunauthenticationservice.domain.member.entity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
-
 import org.checkerframework.common.aliasing.qual.Unique;
 import org.springframework.data.annotation.Id;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -16,7 +14,7 @@ public class Member {
     @Id String id;
     @Unique String authId;
     String name;
-    Set<Role> roles = new HashSet<>(Set.of(Role.ROLE_USER));
+    Set<Role> roles = Set.of(Role.ROLE_USER);
 
     public Member(String authId, String name) {
         this.authId = authId;
