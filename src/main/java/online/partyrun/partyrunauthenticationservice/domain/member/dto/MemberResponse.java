@@ -1,3 +1,7 @@
 package online.partyrun.partyrunauthenticationservice.domain.member.dto;
 
-public record MemberResponse(String id, String authId, String name) {}
+import online.partyrun.partyrunauthenticationservice.domain.member.entity.Role;
+
+import java.util.Set;
+
+public record MemberResponse(String id, String authId, String name, Set<Role> roles) {}

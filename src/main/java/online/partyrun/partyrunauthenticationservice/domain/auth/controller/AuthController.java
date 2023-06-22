@@ -8,12 +8,10 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 
 import online.partyrun.jwtmanager.dto.JwtToken;
-import online.partyrun.partyrunauthenticationservice.domain.auth.dto.AccessTokenResponse;
 import online.partyrun.partyrunauthenticationservice.domain.auth.dto.IdTokenRequest;
 import online.partyrun.partyrunauthenticationservice.domain.auth.service.AuthService;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -25,15 +23,14 @@ public class AuthController {
     AuthService authService;
 
     @PostMapping
-    public ResponseEntity<JwtToken> login(@RequestBody @Valid IdTokenRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(authService.authorize(request.idToken()));
+    @ResponseStatus(HttpStatus.CREATED)
+    public JwtToken login(@RequestBody @Valid IdTokenRequest request) {
+        return authService.authorize(request.idToken());
     }
 
     @PostMapping("access")
-    public ResponseEntity<AccessTokenResponse> refreshAccessToken(
-            @RequestHeader("Refresh-Token") String refreshToken) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(authService.refreshAccessToken(refreshToken));
+    @ResponseStatus(HttpStatus.CREATED)
+    public JwtToken refreshAccessToken(@RequestHeader("Refresh-Token") String refreshToken) {
+        return authService.refreshAccessToken(refreshToken);
     }
 }

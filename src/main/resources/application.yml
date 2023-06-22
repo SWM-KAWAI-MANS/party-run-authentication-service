@@ -1,3 +1,6 @@
+server:
+  servlet:
+    context-path: /api
 spring:
   profiles:
     active: test
@@ -9,12 +12,6 @@ spring:
 
 firebase:
   secret: ${FIREBASE_SECRET}
-
-de:
-  flapdoodle:
-    mongodb:
-      embedded:
-        version: 5.0.5
 
 jwt:
   access-secret-key: "asfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasd"
