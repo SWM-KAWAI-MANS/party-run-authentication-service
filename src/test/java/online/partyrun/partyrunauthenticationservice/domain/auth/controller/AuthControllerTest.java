@@ -9,17 +9,10 @@ import online.partyrun.jwtmanager.dto.JwtToken;
 import online.partyrun.partyrunauthenticationservice.domain.auth.dto.IdTokenRequest;
 import online.partyrun.partyrunauthenticationservice.domain.auth.exception.IllegalIdTokenException;
 import online.partyrun.partyrunauthenticationservice.domain.auth.service.AuthService;
-import online.partyrun.springsecurityauthorizationmanager.JwtAuthenticationFilter;
-import online.partyrun.springsecurityauthorizationmanager.SecurityConfig;
 import online.partyrun.testmanager.docs.RestControllerNoneAuthTest;
-import online.partyrun.testmanager.docs.RestControllerTest;
 
 import org.junit.jupiter.api.*;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
