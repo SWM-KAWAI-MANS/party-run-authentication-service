@@ -69,8 +69,8 @@ dependencies {
 
     //mapstruct
     implementation 'org.mapstruct:mapstruct:1.5.1.Final'
-    implementation 'com.github.SWM-KAWAI-MANS:spring-security-authorization-manager:0.0.6-alpha'
-    testImplementation 'com.github.SWM-KAWAI-MANS:test-manager:0.0.10-alpha'
+    implementation 'com.github.SWM-KAWAI-MANS:spring-security-authorization-manager:1.0.0'
+    testImplementation 'com.github.SWM-KAWAI-MANS:test-manager:1.0.0'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
     annotationProcessor "org.projectlombok:lombok-mapstruct-binding:0.2.0"
 
