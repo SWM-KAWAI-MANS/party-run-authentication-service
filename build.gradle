@@ -3,6 +3,7 @@ plugins {
     id 'org.springframework.boot' version '3.1.0'
     id 'io.spring.dependency-management' version '1.1.0'
     id 'org.asciidoctor.jvm.convert' version '3.3.2'
+    id 'com.google.cloud.tools.jib' version '3.2.1'
 }
 
 group = 'online.partyrun'
@@ -11,6 +12,19 @@ sourceCompatibility = '17'
 
 jar {
     enabled = false
+}
+
+jib {
+    from {
+        image = "openjdk:17"
+    }
+    to {
+        image = "phjppo0918/party-run-authentication"
+        tags = ["latest"]
+    }
+    container {
+        jvmFlags = ["-Xms128m", "-Xmx128m"]
+    }
 }
 
 repositories {
