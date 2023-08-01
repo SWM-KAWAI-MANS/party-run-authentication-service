@@ -33,5 +33,10 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
+      - name: Build with Gradle
+        run: ./gradlew build
+        env:
+          FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
+
       - name: Build with jib
         run: ./gradlew jib --image="${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKER_AUTHENTICATION_IMAGE_NAME }}"
