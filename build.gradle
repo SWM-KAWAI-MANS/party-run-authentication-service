@@ -20,9 +20,14 @@ jib {
     }
     to {
         tags = ["latest"]
+        image = "parkseongwoo/party-run-authentication"
     }
     container {
         jvmFlags = ["-Xms128m", "-Xmx128m"]
+    }
+
+    extraDirectories {
+        paths = file('build/resources/main/static/docs')
     }
 }
 
