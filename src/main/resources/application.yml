@@ -76,9 +76,9 @@ spring:
 
 
   datasource:
-    url: ${DATABASE_URL}
-    username: ${DATABASE_USERNAME}
-    password: ${DATABASE_PASSWORD}
+    url: ${MYSQL_DATABASE_URL}
+    username: ${MYSQL_DATABASE_USERNAME}
+    password: ${MYSQL_DATABASE_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
   sql:
     init:
@@ -104,9 +104,9 @@ spring:
       on-profile: prd
 
   datasource:
-    url: ${DATABASE_URL}
-    username: ${DATABASE_USERNAME}
-    password: ${DATABASE_PASSWORD}
+    url: ${MYSQL_DATABASE_URL}
+    username: ${MYSQL_DATABASE_USERNAME}
+    password: ${MYSQL_DATABASE_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
   sql:
     init:
