@@ -2,6 +2,9 @@ server:
   servlet:
     context-path: /api
 
+firebase:
+  secret: ${FIREBASE_SECRET}
+
 ---
 
 spring:
@@ -30,9 +33,6 @@ spring:
         format_sql: true
     hibernate:
       ddl-auto: create-drop
-
-firebase:
-  secret: ${FIREBASE_SECRET}
 
 jwt:
   access-secret-key: "asfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasd"
@@ -95,6 +95,7 @@ jwt:
   access-expire-second: ${JWT_ACCESS_EXPIRE_LENGTH}
   refresh-secret-key: ${JWT_REFRESH_SECRET_KEY}
   refresh-expire-second: ${JWT_REFRESH_EXPIRE_LENGTH}
+
 ---
 
 spring:
