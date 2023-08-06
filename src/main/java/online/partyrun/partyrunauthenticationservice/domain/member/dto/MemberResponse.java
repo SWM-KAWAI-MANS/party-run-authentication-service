@@ -7,8 +7,7 @@ import java.util.Set;
 
 public record MemberResponse(String id, String authId, String name, Set<Role> roles) {
 
-    public static MemberResponse toResponse(Member member) {
-        return new MemberResponse(
-                member.getId(), member.getAuthId(), member.getName(), member.getRoles());
+    public MemberResponse(Member member) {
+        this(member.getId(), member.getAuthId(), member.getName(), member.getRoles());
     }
 }

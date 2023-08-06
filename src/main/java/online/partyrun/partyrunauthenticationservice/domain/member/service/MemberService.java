@@ -22,6 +22,6 @@ public class MemberService {
                 memberRepository
                         .findByAuthId(request.authId())
                         .orElseGet(() -> memberRepository.save(request.toEntity()));
-        return MemberResponse.toResponse(member);
+        return new MemberResponse(member);
     }
 }
