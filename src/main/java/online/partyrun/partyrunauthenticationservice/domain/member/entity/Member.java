@@ -1,7 +1,6 @@
 package online.partyrun.partyrunauthenticationservice.domain.member.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -9,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import org.checkerframework.common.aliasing.qual.Unique;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Set;
 import java.util.UUID;
@@ -19,14 +19,22 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Member {
 
-    @Id String id;
+    @Id
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(columnDefinition = "BINARY(16)")
+    private UUID id;
+
     @Unique String authId;
     String name;
     Set<Role> roles = Set.of(Role.ROLE_USER);
 
     public Member(String authId, String name) {
-        this.id = UUID.randomUUID().toString();
         this.authId = authId;
         this.name = name;
+    }
+
+    public String getId() {
+        return this.id.toString();
     }
 }
