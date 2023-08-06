@@ -25,16 +25,24 @@ public class Member {
     @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @Unique String authId;
-    String name;
+    @Unique
+    String authId;
+
+    @Embedded
+    Name name;
+
     Set<Role> roles = Set.of(Role.ROLE_USER);
 
     public Member(String authId, String name) {
         this.authId = authId;
-        this.name = name;
+        this.name = new Name(name);
     }
 
     public String getId() {
         return this.id.toString();
+    }
+
+    public String getName() {
+        return name.getValue();
     }
 }
