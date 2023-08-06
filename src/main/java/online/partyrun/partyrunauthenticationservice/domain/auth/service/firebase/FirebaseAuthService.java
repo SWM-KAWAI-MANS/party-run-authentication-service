@@ -17,12 +17,13 @@ import online.partyrun.partyrunauthenticationservice.domain.token.entity.Refresh
 import online.partyrun.partyrunauthenticationservice.domain.token.repository.RefreshTokenRepository;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Service
+@Transactional
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class FirebaseAuthService implements AuthService {
