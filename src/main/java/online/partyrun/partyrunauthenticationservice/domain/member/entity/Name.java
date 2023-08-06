@@ -2,10 +2,12 @@ package online.partyrun.partyrunauthenticationservice.domain.member.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+
 import online.partyrun.partyrunauthenticationservice.domain.member.exception.InvalidMemberNameException;
 
 import java.util.Objects;

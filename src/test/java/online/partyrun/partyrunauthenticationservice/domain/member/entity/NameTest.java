@@ -1,16 +1,14 @@
 package online.partyrun.partyrunauthenticationservice.domain.member.entity;
 
-import online.partyrun.partyrunauthenticationservice.domain.member.exception.InvalidMemberNameException;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
-import org.springframework.web.bind.annotation.PathVariable;
-
-import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
+
+import online.partyrun.partyrunauthenticationservice.domain.member.exception.InvalidMemberNameException;
+
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 @DisplayName("Name")
 class NameTest {

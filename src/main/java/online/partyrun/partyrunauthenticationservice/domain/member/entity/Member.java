@@ -25,11 +25,9 @@ public class Member {
     @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @Unique
-    String authId;
+    @Unique String authId;
 
-    @Embedded
-    Name name;
+    @Embedded Name name;
 
     Set<Role> roles = Set.of(Role.ROLE_USER);
 
