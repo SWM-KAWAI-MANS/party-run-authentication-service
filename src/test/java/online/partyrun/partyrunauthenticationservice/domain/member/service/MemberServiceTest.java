@@ -12,7 +12,6 @@ import online.partyrun.partyrunauthenticationservice.domain.member.repository.Me
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.util.Set;
 
@@ -21,9 +20,6 @@ import java.util.Set;
 class MemberServiceTest {
 
     @Autowired MemberService memberService;
-
-    @Autowired MongoTemplate mongoTemplate;
-
     @Autowired MemberRepository memberRepository;
 
     String authId = "authId";
@@ -32,7 +28,7 @@ class MemberServiceTest {
 
     @BeforeEach
     void setUp() {
-        mongoTemplate.getDb().drop();
+        memberRepository.deleteAll();
     }
 
     @Nested
