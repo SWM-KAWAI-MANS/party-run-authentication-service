@@ -1,12 +1,12 @@
 package online.partyrun.partyrunauthenticationservice.domain.member.entity;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import online.partyrun.partyrunauthenticationservice.domain.member.exception.InvalidMemberProfileException;
+
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("Profile")
 class ProfileTest {
