@@ -1,15 +1,16 @@
 package online.partyrun.partyrunauthenticationservice.domain.member.entity;
 
 import jakarta.persistence.*;
-
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-
 import org.checkerframework.common.aliasing.qual.Unique;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
@@ -17,6 +18,7 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@EntityListeners(AuditingEntityListener.class)
 public class Member {
 
     @Id
@@ -30,6 +32,9 @@ public class Member {
     @Embedded Name name;
 
     Set<Role> roles = Set.of(Role.ROLE_USER);
+
+    @CreatedDate
+    private LocalDateTime createdAt;
 
     public Member(String authId, String name) {
         this.authId = authId;
