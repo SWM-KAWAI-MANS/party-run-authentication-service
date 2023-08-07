@@ -7,8 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import online.partyrun.partyrunauthenticationservice.domain.member.event.MemberCreateEvent;
 import org.checkerframework.common.aliasing.qual.Unique;
-import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.domain.AbstractAggregateRoot;
 
 import java.util.Set;
 import java.util.UUID;
@@ -17,13 +18,10 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Member {
+public class Member extends AbstractAggregateRoot<Member> {
 
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "BINARY(16)")
-    private UUID id;
+    private String id;
 
     @Unique String authId;
 
@@ -32,12 +30,11 @@ public class Member {
     Set<Role> roles = Set.of(Role.ROLE_USER);
 
     public Member(String authId, String name) {
+        this.id = UUID.randomUUID().toString();
         this.authId = authId;
         this.name = new Name(name);
-    }
 
-    public String getId() {
-        return this.id.toString();
+        registerEvent(new MemberCreateEvent(this.id));
     }
 
     public String getName() {
