@@ -1,10 +1,5 @@
 package online.partyrun.partyrunauthenticationservice.domain.auth.controller;
 
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import online.partyrun.jwtmanager.dto.JwtToken;
 import online.partyrun.partyrunauthenticationservice.domain.auth.dto.IdTokenRequest;
 import online.partyrun.partyrunauthenticationservice.domain.auth.exception.IllegalIdTokenException;
@@ -12,13 +7,20 @@ import online.partyrun.partyrunauthenticationservice.domain.auth.service.AuthSer
 import online.partyrun.testmanager.docs.RestControllerNoneAuthTest;
 
 import org.junit.jupiter.api.*;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.nio.charset.StandardCharsets;
 
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 @DisplayName("AuthController는")
+@AutoConfigureDataJpa
 class AuthControllerTest extends RestControllerNoneAuthTest {
     @MockBean AuthService authService;
 
