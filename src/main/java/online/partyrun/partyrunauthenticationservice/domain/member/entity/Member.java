@@ -35,7 +35,9 @@ public class Member {
 
     Set<Role> roles = Set.of(Role.ROLE_USER);
 
-    @CreatedDate private LocalDateTime createdAt;
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
 
     public Member(String authId, String name) {
         this.authId = authId;
