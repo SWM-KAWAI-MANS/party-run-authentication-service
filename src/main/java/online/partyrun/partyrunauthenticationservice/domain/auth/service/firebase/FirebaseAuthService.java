@@ -3,7 +3,6 @@ package online.partyrun.partyrunauthenticationservice.domain.auth.service.fireba
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
 
 import online.partyrun.jwtmanager.JwtGenerator;
 import online.partyrun.jwtmanager.dto.JwtToken;
@@ -17,11 +16,11 @@ import online.partyrun.partyrunauthenticationservice.domain.token.entity.Refresh
 import online.partyrun.partyrunauthenticationservice.domain.token.repository.RefreshTokenRepository;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -32,6 +31,7 @@ public class FirebaseAuthService implements AuthService {
     RefreshTokenRepository refreshTokenRepository;
 
     @Override
+    @Transactional
     public JwtToken authorize(String idToken) {
         final TokenResponse tokenResponse = firebaseHandler.verifyIdToken(idToken);
         final MemberResponse member =
@@ -46,6 +46,7 @@ public class FirebaseAuthService implements AuthService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public JwtToken refreshAccessToken(String refreshToken) {
         if (!refreshTokenRepository.existsById(refreshToken)) {
             throw new NoSuchRefreshTokenException(refreshToken);
