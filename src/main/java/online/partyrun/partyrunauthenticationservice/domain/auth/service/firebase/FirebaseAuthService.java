@@ -22,7 +22,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class FirebaseAuthService implements AuthService {
@@ -32,6 +31,7 @@ public class FirebaseAuthService implements AuthService {
     RefreshTokenRepository refreshTokenRepository;
 
     @Override
+    @Transactional
     public JwtToken authorize(String idToken) {
         final TokenResponse tokenResponse = firebaseHandler.verifyIdToken(idToken);
         final MemberResponse member =
@@ -46,6 +46,7 @@ public class FirebaseAuthService implements AuthService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public JwtToken refreshAccessToken(String refreshToken) {
         if (!refreshTokenRepository.existsById(refreshToken)) {
             throw new NoSuchRefreshTokenException(refreshToken);
