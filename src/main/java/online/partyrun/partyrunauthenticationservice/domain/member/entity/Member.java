@@ -1,10 +1,12 @@
 package online.partyrun.partyrunauthenticationservice.domain.member.entity;
 
 import jakarta.persistence.*;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+
 import org.checkerframework.common.aliasing.qual.Unique;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
@@ -33,8 +35,7 @@ public class Member {
 
     Set<Role> roles = Set.of(Role.ROLE_USER);
 
-    @CreatedDate
-    private LocalDateTime createdAt;
+    @CreatedDate private LocalDateTime createdAt;
 
     public Member(String authId, String name) {
         this.authId = authId;
