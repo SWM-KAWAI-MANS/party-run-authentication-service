@@ -1,4 +1,4 @@
 package online.partyrun.partyrunauthenticationservice.domain.member.event;
 
-public record MemberCreateEvent(String id) {
+public record Event(EventType type, Object value) {
 }

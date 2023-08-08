@@ -7,7 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import online.partyrun.partyrunauthenticationservice.domain.member.event.MemberCreateEvent;
+import online.partyrun.partyrunauthenticationservice.domain.member.event.Event;
+import online.partyrun.partyrunauthenticationservice.domain.member.event.EventType;
 import org.checkerframework.common.aliasing.qual.Unique;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.domain.AbstractAggregateRoot;
@@ -47,7 +48,8 @@ public class Member extends AbstractAggregateRoot<Member> {
         this.authId = authId;
         this.name = new Name(name);
         this.profile = new Profile(DEFAULT_PROFILE);
-        registerEvent(new MemberCreateEvent(this.id));
+
+        registerEvent(new Event(EventType.CREATED, this.id));
     }
 
     public String getName() {
