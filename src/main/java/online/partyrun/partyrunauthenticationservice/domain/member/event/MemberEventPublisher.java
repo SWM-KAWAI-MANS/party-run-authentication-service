@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
+import online.partyrun.partyrunauthenticationservice.global.exception.InternalServerErrorException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -36,7 +37,7 @@ public class MemberEventPublisher {
                             .build();
             snsClient.publish(request);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(String.format("%s 이벤트를 발행하는데에 실패했습니다.", event));
+            throw new InternalServerErrorException(String.format("%s 이벤트를 발행하는데에 실패했습니다.", event));
         }
     }
 }
