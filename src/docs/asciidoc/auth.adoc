@@ -19,3 +19,7 @@ operation::refresh token is null[snippets='http-request,http-response']
 === access token 재발급시 refresh token 형식이 잘못됨
 operation::refresh token is invalid[snippets='http-request,http-response']
 
+=== 멤버(me) 조회
+operation::find member[snippets='http-request,http-response']
+=== 잘못된 token으로 멤버 조회
+operation::fail to find member[snippets='http-request,http-response']
