@@ -1,13 +1,14 @@
 package online.partyrun.partyrunauthenticationservice.domain.member.controller;
 
+import online.partyrun.partyrunauthenticationservice.domain.auth.controller.ControllerTestConfig;
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberResponse;
 import online.partyrun.partyrunauthenticationservice.domain.member.exception.MemberNotFoundException;
 import online.partyrun.partyrunauthenticationservice.domain.member.service.MemberService;
 import online.partyrun.testmanager.docs.RestControllerTest;
 import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -20,11 +21,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureDataJpa
-@WebMvcTest(MemberController.class)
+@Import(ControllerTestConfig.class)
 @DisplayName("MemberController")
 class MemberControllerTest extends RestControllerTest {
 
-    @MockBean
+    @Autowired
     MemberService memberService;
 
     @Nested
