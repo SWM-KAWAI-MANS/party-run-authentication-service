@@ -8,8 +8,8 @@ import online.partyrun.jwtmanager.JwtGenerator;
 import online.partyrun.jwtmanager.dto.JwtToken;
 import online.partyrun.partyrunauthenticationservice.domain.auth.exception.NoSuchRefreshTokenException;
 import online.partyrun.partyrunauthenticationservice.domain.auth.service.AuthService;
-import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberRequest;
-import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberResponse;
+import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberAuthRequest;
+import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberAuthResponse;
 import online.partyrun.partyrunauthenticationservice.domain.member.entity.Role;
 import online.partyrun.partyrunauthenticationservice.domain.member.service.MemberService;
 import online.partyrun.partyrunauthenticationservice.domain.token.entity.RefreshToken;
@@ -34,9 +34,9 @@ public class FirebaseAuthService implements AuthService {
     @Transactional
     public JwtToken authorize(String idToken) {
         final TokenResponse tokenResponse = firebaseHandler.verifyIdToken(idToken);
-        final MemberResponse member =
+        final MemberAuthResponse member =
                 memberService.getMember(
-                        new MemberRequest(tokenResponse.uid(), tokenResponse.name()));
+                        new MemberAuthRequest(tokenResponse.uid(), tokenResponse.name()));
         final Set<String> roles =
                 member.roles().stream().map(Role::name).collect(Collectors.toSet());
         final JwtToken jwtToken = jwtGenerator.generate(member.id(), roles);

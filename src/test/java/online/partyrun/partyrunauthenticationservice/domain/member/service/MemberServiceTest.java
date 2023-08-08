@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import online.partyrun.partyrunauthenticationservice.TestConfig;
-import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberRequest;
-import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberResponse;
+import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberAuthRequest;
+import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberAuthResponse;
 import online.partyrun.partyrunauthenticationservice.domain.member.entity.Member;
 import online.partyrun.partyrunauthenticationservice.domain.member.entity.Role;
 import online.partyrun.partyrunauthenticationservice.domain.member.repository.MemberRepository;
@@ -27,7 +27,7 @@ class MemberServiceTest {
 
     String authId = "authId";
     String name = "박현준";
-    MemberRequest memberRequest = new MemberRequest(authId, name);
+    MemberAuthRequest memberAuthRequest = new MemberAuthRequest(authId, name);
 
     @BeforeEach
     void setUp() {
@@ -42,7 +42,7 @@ class MemberServiceTest {
         @Test
         @DisplayName("멤버가 존재하는지 확인한다.")
         void getMember() {
-            MemberResponse response = memberService.getMember(memberRequest);
+            MemberAuthResponse response = memberService.getMember(memberAuthRequest);
             assertAll(
                     () -> assertThat(response.id()).isNotNull(),
                     () -> assertThat(response.authId()).isEqualTo(member.getAuthId()),
@@ -58,11 +58,11 @@ class MemberServiceTest {
         @Test
         @DisplayName("새로운 멤버를 생성한다.")
         void getMember() {
-            MemberResponse response = memberService.getMember(memberRequest);
+            MemberAuthResponse response = memberService.getMember(memberAuthRequest);
             assertAll(
                     () -> assertThat(response.id()).isNotNull(),
-                    () -> assertThat(response.authId()).isEqualTo(memberRequest.authId()),
-                    () -> assertThat(response.name()).isEqualTo(memberRequest.name()),
+                    () -> assertThat(response.authId()).isEqualTo(memberAuthRequest.authId()),
+                    () -> assertThat(response.name()).isEqualTo(memberAuthRequest.name()),
                     () -> assertThat(response.roles()).isEqualTo(Set.of(Role.ROLE_USER)));
         }
     }

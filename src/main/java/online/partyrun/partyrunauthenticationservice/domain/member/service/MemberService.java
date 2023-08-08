@@ -17,11 +17,11 @@ import org.springframework.stereotype.Service;
 public class MemberService {
     MemberRepository memberRepository;
 
-    public MemberResponse getMember(MemberRequest request) {
+    public MemberAuthResponse getMember(MemberAuthRequest request) {
         final Member member =
                 memberRepository
                         .findByAuthId(request.authId())
                         .orElseGet(() -> memberRepository.save(request.toEntity()));
-        return new MemberResponse(member);
+        return new MemberAuthResponse(member);
     }
 }
