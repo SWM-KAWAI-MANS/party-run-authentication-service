@@ -28,8 +28,8 @@ public class MemberService {
     }
 
     public MemberResponse findMember(String id) {
-        final Member member = memberRepository.findById(id)
-                .orElseThrow(() -> new MemberNotFoundException(id));
+        final Member member =
+                memberRepository.findById(id).orElseThrow(() -> new MemberNotFoundException(id));
         return new MemberResponse(member);
     }
 }
