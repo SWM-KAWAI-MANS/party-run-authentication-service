@@ -53,6 +53,10 @@ public class Member extends AbstractAggregateRoot<Member> {
     }
 
     public String getName() {
-        return name.getValue();
+        return this.name.getValue();
+    }
+
+    public String getProfile() {
+        return this.profile.getValue();
     }
 }

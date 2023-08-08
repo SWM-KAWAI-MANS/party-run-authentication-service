@@ -4,12 +4,15 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberRequest;
+import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberAuthRequest;
+import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberAuthResponse;
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberResponse;
 import online.partyrun.partyrunauthenticationservice.domain.member.entity.Member;
+import online.partyrun.partyrunauthenticationservice.domain.member.exception.MemberNotFoundException;
 import online.partyrun.partyrunauthenticationservice.domain.member.repository.MemberRepository;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -17,11 +20,20 @@ import org.springframework.stereotype.Service;
 public class MemberService {
     MemberRepository memberRepository;
 
-    public MemberResponse getMember(MemberRequest request) {
+    @Transactional
+    public MemberAuthResponse getMember(MemberAuthRequest request) {
         final Member member =
                 memberRepository
                         .findByAuthId(request.authId())
                         .orElseGet(() -> memberRepository.save(request.toEntity()));
+        return new MemberAuthResponse(member);
+    }
+
+    @Transactional(readOnly = true)
+    public MemberResponse findMember(String id) {
+        final Member member =
+                memberRepository.findById(id).orElseThrow(() -> new MemberNotFoundException(id));
+
         return new MemberResponse(member);
     }
 }

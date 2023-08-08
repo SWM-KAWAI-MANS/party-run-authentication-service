@@ -5,6 +5,10 @@ server:
 firebase:
   secret: ${FIREBASE_SECRET}
 
+auth:
+  filter:
+    exclusions: auth, auth/access
+
 aws:
   sns:
     access-key: ${AWS_SNS_ACCESS_KEY}

@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import online.partyrun.partyrunauthenticationservice.global.exception.BadRequestException;
 import online.partyrun.partyrunauthenticationservice.global.exception.InternalServerErrorException;
+import online.partyrun.partyrunauthenticationservice.global.exception.NotFoundException;
 import online.partyrun.partyrunauthenticationservice.global.exception.UnAuthorizedException;
 
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,13 @@ public class HttpControllerAdvice {
     public ExceptionResponse handleUnAuthorizedException(UnAuthorizedException exception) {
         log.warn(exception.getMessage());
         return new ExceptionResponse("승인되지 않은 요청입니다.");
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ExceptionResponse handleNotFoundException(NotFoundException exception) {
+        log.warn(exception.getMessage());
+        return new ExceptionResponse("요청한 리소스를 찾을 수 없습니다.");
     }
 
     @ExceptionHandler({RuntimeException.class, InternalServerErrorException.class, Exception.class})
