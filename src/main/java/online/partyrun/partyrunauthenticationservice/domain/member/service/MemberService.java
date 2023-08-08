@@ -42,6 +42,6 @@ public class MemberService {
         final List<String> ids = request.ids();
         final List<Member> members = memberRepository.findAllById(ids);
 
-        return new MembersResponse(members.stream().map(MemberResponse::new).toList());
+        return MembersResponse.from(members);
     }
 }
