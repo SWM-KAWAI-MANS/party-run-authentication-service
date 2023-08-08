@@ -4,15 +4,15 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberAuthRequest;
-import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberAuthResponse;
-import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberResponse;
+import online.partyrun.partyrunauthenticationservice.domain.member.dto.*;
 import online.partyrun.partyrunauthenticationservice.domain.member.entity.Member;
 import online.partyrun.partyrunauthenticationservice.domain.member.exception.MemberNotFoundException;
 import online.partyrun.partyrunauthenticationservice.domain.member.repository.MemberRepository;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -35,5 +35,13 @@ public class MemberService {
                 memberRepository.findById(id).orElseThrow(() -> new MemberNotFoundException(id));
 
         return new MemberResponse(member);
+    }
+
+    public MembersResponse findMembers(MembersRequest request) {
+
+        final List<String> ids = request.ids();
+        final List<Member> members = memberRepository.findAllById(ids);
+
+        return MembersResponse.from(members);
     }
 }
