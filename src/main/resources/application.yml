@@ -56,7 +56,6 @@ spring:
     console:
       enabled: true
 
-
   data:
     redis:
       url: ${REDIS_URL}
@@ -74,7 +73,6 @@ spring:
     activate:
       on-profile: dev
 
-
   datasource:
     url: ${MYSQL_DATABASE_URL}
     username: ${MYSQL_DATABASE_USERNAME}
@@ -90,6 +88,9 @@ spring:
     hibernate:
       ddl-auto: create
 
+  data:
+    redis:
+      url: ${REDIS_URL}
 jwt:
   access-secret-key: ${JWT_ACCESS_SECRET_KEY}
   access-expire-second: ${JWT_ACCESS_EXPIRE_LENGTH}
@@ -117,6 +118,10 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: validate
+
+  data:
+    redis:
+      url: ${REDIS_URL}
 
 jwt:
   access-secret-key: ${JWT_ACCESS_SECRET_KEY}
