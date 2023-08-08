@@ -5,6 +5,13 @@ server:
 firebase:
   secret: ${FIREBASE_SECRET}
 
+aws:
+  sns:
+    access-key: ${AWS_SNS_ACCESS_KEY}
+    secret-key: ${AWS_SNS_SECRET_KEY}
+    region: ${AWS_SNS_REGION}
+    arn: ${AWS_SNS_ARN}
+
 ---
 
 spring:
@@ -33,6 +40,16 @@ spring:
         format_sql: true
     hibernate:
       ddl-auto: create-drop
+
+firebase:
+  secret: "test firebase secret"
+
+aws:
+  sns:
+    access-key: "test aws sns access key"
+    secret-key: "test aws sns secret key"
+    region: "test aws sns region"
+    arn: "test aws sns arn"
 
 jwt:
   access-secret-key: "asfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasd"

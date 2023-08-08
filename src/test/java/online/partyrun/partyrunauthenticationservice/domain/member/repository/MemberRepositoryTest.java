@@ -2,13 +2,16 @@ package online.partyrun.partyrunauthenticationservice.domain.member.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import online.partyrun.partyrunauthenticationservice.TestConfig;
 import online.partyrun.partyrunauthenticationservice.domain.member.entity.Member;
 
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 
 @DataJpaTest
+@Import(TestConfig.class)
 @DisplayName("MemberRepository")
 class MemberRepositoryTest {
     @Autowired MemberRepository memberRepository;

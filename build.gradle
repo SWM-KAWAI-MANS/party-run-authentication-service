@@ -71,6 +71,12 @@ bootJar {
     dependsOn createDocument
 }
 
+dependencyManagement {
+    imports {
+        mavenBom 'software.amazon.awssdk:bom:2.20.120'
+    }
+}
+
 dependencies {
     asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -79,6 +85,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.google.firebase:firebase-admin:9.1.1'
     implementation 'com.github.SWM-KAWAI-MANS:jwt-manager:1.3.0'
+    implementation 'software.amazon.awssdk:sns'
 
     //lombok
     compileOnly 'org.projectlombok:lombok'
