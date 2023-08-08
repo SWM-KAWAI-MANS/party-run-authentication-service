@@ -3,6 +3,7 @@ package online.partyrun.partyrunauthenticationservice.domain.member.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import online.partyrun.partyrunauthenticationservice.TestConfig;
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberRequest;
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberResponse;
 import online.partyrun.partyrunauthenticationservice.domain.member.entity.Member;
@@ -12,10 +13,12 @@ import online.partyrun.partyrunauthenticationservice.domain.member.repository.Me
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 
 import java.util.Set;
 
 @SpringBootTest
+@Import(TestConfig.class)
 @DisplayName("MemberService")
 class MemberServiceTest {
 
