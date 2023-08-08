@@ -18,8 +18,6 @@ import java.util.Objects;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Profile {
 
-    private static final String URL_PREFIX = "https://";
-
     @Column(name = "profile")
     String value;
 
@@ -29,7 +27,7 @@ public class Profile {
     }
 
     private void validateProfile(String value) {
-        if (Objects.isNull(value) || value.isBlank() || !value.startsWith(URL_PREFIX)) {
+        if (Objects.isNull(value) || value.isBlank()) {
             throw new InvalidMemberProfileException(value);
         }
     }

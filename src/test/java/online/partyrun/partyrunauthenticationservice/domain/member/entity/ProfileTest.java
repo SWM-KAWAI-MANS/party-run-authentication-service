@@ -21,14 +21,5 @@ class ProfileTest {
             assertThatThrownBy(() -> new Profile(value))
                     .isInstanceOf(InvalidMemberProfileException.class);
         }
-
-        @Test
-        @DisplayName("https:// 로 시작하지 않으면 예외를 던진다.")
-        void throwInvalidPrefixException() {
-            String value = "www.naver.com";
-
-            assertThatThrownBy(() -> new Profile(value))
-                    .isInstanceOf(InvalidMemberProfileException.class);
-        }
     }
 }
