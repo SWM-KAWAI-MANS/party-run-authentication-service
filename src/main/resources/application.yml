@@ -5,6 +5,13 @@ server:
 firebase:
   secret: ${FIREBASE_SECRET}
 
+aws:
+  sns:
+    access-key: ${AWS_SNS_ACCESS_KEY}
+    secret-key: ${AWS_SNS_SECRET_KEY}
+    region: ${AWS_SNS_REGION}
+    arn: ${AWS_SNS_ARN}
+
 ---
 
 spring:
