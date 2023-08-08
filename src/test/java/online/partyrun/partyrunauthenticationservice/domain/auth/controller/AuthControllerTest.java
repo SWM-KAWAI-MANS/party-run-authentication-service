@@ -12,6 +12,7 @@ import online.partyrun.partyrunauthenticationservice.domain.auth.service.AuthSer
 import online.partyrun.testmanager.docs.RestControllerNoneAuthTest;
 
 import org.junit.jupiter.api.*;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
@@ -19,6 +20,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import java.nio.charset.StandardCharsets;
 
 @DisplayName("AuthController는")
+@AutoConfigureDataJpa
 class AuthControllerTest extends RestControllerNoneAuthTest {
     @MockBean AuthService authService;
 
