@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
 import online.partyrun.partyrunauthenticationservice.global.exception.InternalServerErrorException;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
