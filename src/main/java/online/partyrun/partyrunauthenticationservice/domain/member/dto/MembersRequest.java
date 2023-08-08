@@ -4,5 +4,4 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
-public record MembersRequest(@NotNull List<String> ids) {
-}
+public record MembersRequest(@NotNull List<String> ids) {}

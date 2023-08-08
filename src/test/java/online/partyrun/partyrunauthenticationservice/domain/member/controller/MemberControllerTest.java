@@ -85,15 +85,16 @@ class MemberControllerTest extends RestControllerTest {
             MembersRequest request = new MembersRequest(List.of("parkseongwoo", "parkhyunjun"));
 
             MembersResponse response =
-                    new MembersResponse(List.of(new MemberResponse(
-                                    "parkseongwoo",
-                                    "박성우",
-                                    "https://avatars.githubusercontent.com/u/134378498?s=400&u=72e57bdb2eafcad3d0c8b8e137349397eefce35f&v=4"),
-                            new MemberResponse(
-                                    "parkhyunjun",
-                                    "박현준",
-                                    "https://avatars.githubusercontent.com/u/134378498?s=400&u=72e57bdb2eafcad3d0c8b8e137349397eefce35f&v=4"))
-                    );
+                    new MembersResponse(
+                            List.of(
+                                    new MemberResponse(
+                                            "parkseongwoo",
+                                            "박성우",
+                                            "https://avatars.githubusercontent.com/u/134378498?s=400&u=72e57bdb2eafcad3d0c8b8e137349397eefce35f&v=4"),
+                                    new MemberResponse(
+                                            "parkhyunjun",
+                                            "박현준",
+                                            "https://avatars.githubusercontent.com/u/134378498?s=400&u=72e57bdb2eafcad3d0c8b8e137349397eefce35f&v=4")));
 
             given(memberService.findMembers(request)).willReturn(response);
 
@@ -106,8 +107,7 @@ class MemberControllerTest extends RestControllerTest {
                                     .contentType(MediaType.APPLICATION_JSON)
                                     .characterEncoding(StandardCharsets.UTF_8)
                                     .content(toRequestBody(request)));
-            actions.andExpect(status().isOk())
-                    .andExpect(content().json(toRequestBody(response)));
+            actions.andExpect(status().isOk()).andExpect(content().json(toRequestBody(response)));
 
             setPrintDocs(actions, "find members");
         }
