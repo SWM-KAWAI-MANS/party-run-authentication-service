@@ -1,6 +1,7 @@
 package online.partyrun.partyrunauthenticationservice.global.config;
 
 import online.partyrun.partyrunauthenticationservice.global.controller.AsyncExceptionHandler;
+
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;

@@ -9,6 +9,7 @@ import lombok.experimental.FieldDefaults;
 
 import online.partyrun.partyrunauthenticationservice.domain.member.event.Event;
 import online.partyrun.partyrunauthenticationservice.domain.member.event.EventType;
+
 import org.checkerframework.common.aliasing.qual.Unique;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.domain.AbstractAggregateRoot;
@@ -28,8 +29,7 @@ public class Member extends AbstractAggregateRoot<Member> {
     private static final String DEFAULT_PROFILE =
             "https://avatars.githubusercontent.com/u/134378498?s=400&u=72e57bdb2eafcad3d0c8b8e137349397eefce35f&v=4";
 
-    @Id
-    private String id;
+    @Id private String id;
 
     @Unique String authId;
 
