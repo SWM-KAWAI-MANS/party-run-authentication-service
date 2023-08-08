@@ -41,6 +41,16 @@ spring:
     hibernate:
       ddl-auto: create-drop
 
+firebase:
+  secret: "test firebase secret"
+
+aws:
+  sns:
+    access-key: "test aws sns access key"
+    secret-key: "test aws sns secret key"
+    region: "test aws sns region"
+    arn: "test aws sns arn"
+
 jwt:
   access-secret-key: "asfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasd"
   access-expire-second: 1000000
