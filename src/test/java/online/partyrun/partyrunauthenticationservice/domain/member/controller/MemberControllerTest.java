@@ -8,7 +8,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import online.partyrun.partyrunauthenticationservice.domain.auth.controller.ControllerTestConfig;
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberResponse;
-import online.partyrun.partyrunauthenticationservice.domain.member.dto.MembersRequest;
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MembersResponse;
 import online.partyrun.partyrunauthenticationservice.domain.member.exception.MemberNotFoundException;
 import online.partyrun.partyrunauthenticationservice.domain.member.service.MemberService;
@@ -82,7 +81,8 @@ class MemberControllerTest extends RestControllerTest {
         @Test
         @DisplayName("정상적인 멤버의 토큰이 주어지면 멤버 정보를 조회한다.")
         void successFindMember() throws Exception {
-            MembersRequest request = new MembersRequest(List.of("parkseongwoo", "parkhyunjun"));
+            String id1 = "parkseongwoo";
+            String id2 = "parkhyunjun";
 
             MembersResponse response =
                     new MembersResponse(
@@ -96,7 +96,7 @@ class MemberControllerTest extends RestControllerTest {
                                             "박현준",
                                             "https://avatars.githubusercontent.com/u/134378498?s=400&u=72e57bdb2eafcad3d0c8b8e137349397eefce35f&v=4")));
 
-            given(memberService.findMembers(request)).willReturn(response);
+            given(memberService.findMembers(List.of(id1, id2))).willReturn(response);
 
             ResultActions actions =
                     mockMvc.perform(
@@ -106,7 +106,8 @@ class MemberControllerTest extends RestControllerTest {
                                             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c")
                                     .contentType(MediaType.APPLICATION_JSON)
                                     .characterEncoding(StandardCharsets.UTF_8)
-                                    .content(toRequestBody(request)));
+                                    .param("ids", id1)
+                                    .param("ids", id2));
             actions.andExpect(status().isOk()).andExpect(content().json(toRequestBody(response)));
 
             setPrintDocs(actions, "find members");

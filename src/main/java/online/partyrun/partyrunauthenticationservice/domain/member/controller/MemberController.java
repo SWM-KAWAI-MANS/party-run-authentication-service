@@ -1,21 +1,20 @@
 package online.partyrun.partyrunauthenticationservice.domain.member.controller;
 
-import jakarta.validation.Valid;
-
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberResponse;
-import online.partyrun.partyrunauthenticationservice.domain.member.dto.MembersRequest;
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MembersResponse;
 import online.partyrun.partyrunauthenticationservice.domain.member.service.MemberService;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,7 +30,7 @@ public class MemberController {
     }
 
     @GetMapping
-    public MembersResponse findMembers(@Valid @RequestBody MembersRequest request) {
-        return memberService.findMembers(request);
+    public MembersResponse findMembers(@RequestParam List<String> ids) {
+        return memberService.findMembers(ids);
     }
 }

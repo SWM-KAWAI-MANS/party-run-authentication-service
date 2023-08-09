@@ -37,9 +37,7 @@ public class MemberService {
         return new MemberResponse(member);
     }
 
-    public MembersResponse findMembers(MembersRequest request) {
-
-        final List<String> ids = request.ids();
+    public MembersResponse findMembers(List<String> ids) {
         final List<Member> members = memberRepository.findAllById(ids);
 
         return MembersResponse.from(members);
