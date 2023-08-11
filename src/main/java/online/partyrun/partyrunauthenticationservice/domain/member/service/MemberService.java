@@ -42,4 +42,10 @@ public class MemberService {
 
         return MembersResponse.from(members);
     }
+
+    public MessageResponse deleteMember(String id) {
+        memberRepository.deleteById(id);
+
+        return new MessageResponse();
+    }
 }
