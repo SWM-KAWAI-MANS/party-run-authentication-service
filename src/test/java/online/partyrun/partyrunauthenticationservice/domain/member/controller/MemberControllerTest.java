@@ -129,7 +129,7 @@ class MemberControllerTest extends RestControllerTest {
 
             ResultActions actions =
                     mockMvc.perform(
-                            delete("/members")
+                            delete("/members/me")
                                     .with(csrf())
                                     .header(
                                             "Authorization",

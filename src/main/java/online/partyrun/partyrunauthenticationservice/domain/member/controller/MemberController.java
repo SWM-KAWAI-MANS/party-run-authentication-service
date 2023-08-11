@@ -32,7 +32,7 @@ public class MemberController {
         return memberService.findMembers(ids);
     }
 
-    @DeleteMapping
+    @DeleteMapping("me")
     public MessageResponse deleteMember(Authentication auth) {
         return memberService.deleteMember(auth.getName());
     }
