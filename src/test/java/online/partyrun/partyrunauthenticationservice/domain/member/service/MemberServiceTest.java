@@ -1,13 +1,17 @@
 package online.partyrun.partyrunauthenticationservice.domain.member.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import jakarta.persistence.EntityManager;
 import online.partyrun.partyrunauthenticationservice.TestConfig;
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberAuthRequest;
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberAuthResponse;
+import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberResponse;
 import online.partyrun.partyrunauthenticationservice.domain.member.entity.Member;
 import online.partyrun.partyrunauthenticationservice.domain.member.entity.Role;
+import online.partyrun.partyrunauthenticationservice.domain.member.exception.MemberNotFoundException;
 import online.partyrun.partyrunauthenticationservice.domain.member.repository.MemberRepository;
 
 import org.junit.jupiter.api.*;
@@ -64,6 +68,23 @@ class MemberServiceTest {
                     () -> assertThat(response.authId()).isEqualTo(memberAuthRequest.authId()),
                     () -> assertThat(response.name()).isEqualTo(memberAuthRequest.name()),
                     () -> assertThat(response.roles()).isEqualTo(Set.of(Role.ROLE_USER)));
+        }
+    }
+
+    @Nested
+    @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+    class 멤버를_삭제할_때 {
+
+        @Test
+        @DisplayName("DB에서 제거한다.")
+        void deleteMember() {
+            final Member savedMember = memberRepository.save(new Member("authId", "박성우"));
+
+            assertThat(memberService.findMember(savedMember.getId())).isNotNull();
+
+            memberService.deleteMember(savedMember.getId());
+            assertThatThrownBy(() -> memberService.findMember(savedMember.getId()))
+                    .isInstanceOf(MemberNotFoundException.class);
         }
     }
 }
