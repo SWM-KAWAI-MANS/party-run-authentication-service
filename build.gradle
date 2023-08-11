@@ -96,7 +96,7 @@ dependencies {
     testImplementation 'com.github.SWM-KAWAI-MANS:test-manager:1.0.2'
     asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
+    testImplementation 'org.springframework.security:spring-security-test'
 
     //lombok-test
     testCompileOnly 'org.projectlombok:lombok'
