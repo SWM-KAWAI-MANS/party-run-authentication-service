@@ -4,11 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import jakarta.persistence.EntityManager;
 import online.partyrun.partyrunauthenticationservice.TestConfig;
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberAuthRequest;
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberAuthResponse;
-import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberResponse;
 import online.partyrun.partyrunauthenticationservice.domain.member.entity.Member;
 import online.partyrun.partyrunauthenticationservice.domain.member.entity.Role;
 import online.partyrun.partyrunauthenticationservice.domain.member.exception.MemberNotFoundException;
