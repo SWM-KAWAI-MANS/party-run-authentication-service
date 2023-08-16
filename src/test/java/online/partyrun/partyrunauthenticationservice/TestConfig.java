@@ -6,10 +6,10 @@ import online.partyrun.partyrunauthenticationservice.domain.member.event.MemberE
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.support.GenericApplicationContext;
+
 import software.amazon.awssdk.services.sns.SnsClient;
 
 @TestConfiguration

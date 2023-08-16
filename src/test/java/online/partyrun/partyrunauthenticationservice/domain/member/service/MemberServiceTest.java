@@ -29,14 +29,10 @@ import java.util.Set;
 @DisplayName("MemberService")
 class MemberServiceTest {
 
-    @Autowired
-    MemberService memberService;
-    @Autowired
-    MemberRepository memberRepository;
-    @Autowired
-    ApplicationEventPublisher eventPublisher;
-    @Autowired
-    MemberEventPublisher memberEventPublisher;
+    @Autowired MemberService memberService;
+    @Autowired MemberRepository memberRepository;
+    @Autowired ApplicationEventPublisher eventPublisher;
+    @Autowired MemberEventPublisher memberEventPublisher;
 
     String authId = "authId";
     String name = "박현준";
@@ -57,9 +53,10 @@ class MemberServiceTest {
         void getMember() {
             MemberAuthResponse response = memberService.getMember(memberAuthRequest);
             assertAll(
-                    () -> then(eventPublisher)
-                            .should(times(0))
-                            .publishEvent(Event.create(response.id())),
+                    () ->
+                            then(eventPublisher)
+                                    .should(times(0))
+                                    .publishEvent(Event.create(response.id())),
                     () -> assertThat(response.id()).isNotNull(),
                     () -> assertThat(response.authId()).isEqualTo(member.getAuthId()),
                     () -> assertThat(response.name()).isEqualTo(member.getName()),
@@ -76,9 +73,10 @@ class MemberServiceTest {
         void getMember() {
             MemberAuthResponse response = memberService.getMember(memberAuthRequest);
             assertAll(
-                    () -> then(memberEventPublisher)
-                            .should(times(1))
-                            .publish(Event.create(response.id())),
+                    () ->
+                            then(memberEventPublisher)
+                                    .should(times(1))
+                                    .publish(Event.create(response.id())),
                     () -> assertThat(response.id()).isNotNull(),
                     () -> assertThat(response.authId()).isEqualTo(memberAuthRequest.authId()),
                     () -> assertThat(response.name()).isEqualTo(memberAuthRequest.name()),
@@ -99,15 +97,17 @@ class MemberServiceTest {
 
             memberService.deleteMember(savedMember.getId());
             Assertions.assertAll(
-                    () -> then(eventPublisher)
-                            .should(times(1))
-                            .publishEvent(Event.delete(savedMember.getId())),
-                    () -> then(memberEventPublisher)
-                            .should(times(1))
-                            .publish(Event.delete(savedMember.getId())),
-                    () -> assertThatThrownBy(() -> memberService.findMember(savedMember.getId()))
-                            .isInstanceOf(MemberNotFoundException.class)
-            );
+                    () ->
+                            then(eventPublisher)
+                                    .should(times(1))
+                                    .publishEvent(Event.delete(savedMember.getId())),
+                    () ->
+                            then(memberEventPublisher)
+                                    .should(times(1))
+                                    .publish(Event.delete(savedMember.getId())),
+                    () ->
+                            assertThatThrownBy(() -> memberService.findMember(savedMember.getId()))
+                                    .isInstanceOf(MemberNotFoundException.class));
         }
     }
 }
