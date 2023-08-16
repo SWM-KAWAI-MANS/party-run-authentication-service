@@ -8,9 +8,10 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import online.partyrun.partyrunauthenticationservice.domain.member.event.Event;
-import online.partyrun.partyrunauthenticationservice.domain.member.event.EventType;
 
 import org.checkerframework.common.aliasing.qual.Unique;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.domain.AbstractAggregateRoot;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -23,6 +24,8 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@SQLDelete(sql = "UPDATE member SET is_deleted = true WHERE id = ?")
+@Where(clause = "is_deleted = false")
 @EntityListeners(AuditingEntityListener.class)
 public class Member extends AbstractAggregateRoot<Member> {
 
@@ -39,6 +42,8 @@ public class Member extends AbstractAggregateRoot<Member> {
 
     Set<Role> roles = Set.of(Role.ROLE_USER);
 
+    boolean isDeleted;
+
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdAt;
@@ -49,7 +54,7 @@ public class Member extends AbstractAggregateRoot<Member> {
         this.name = new Name(name);
         this.profile = new Profile(DEFAULT_PROFILE);
 
-        registerEvent(new Event(EventType.CREATED, this.id));
+        registerEvent(Event.create(this.id));
     }
 
     public String getName() {

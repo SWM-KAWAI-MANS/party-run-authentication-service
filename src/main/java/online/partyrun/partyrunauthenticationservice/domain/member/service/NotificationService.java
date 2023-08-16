@@ -20,7 +20,7 @@ public class NotificationService {
     MemberEventPublisher publisher;
 
     @TransactionalEventListener
-    public void notifyMemberCreated(Event event) {
+    public void notifyMemberEvent(Event event) {
         publisher.publish(event);
     }
 }

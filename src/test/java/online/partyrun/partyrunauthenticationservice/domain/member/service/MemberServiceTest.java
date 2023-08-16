@@ -3,18 +3,23 @@ package online.partyrun.partyrunauthenticationservice.domain.member.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.times;
 
 import online.partyrun.partyrunauthenticationservice.TestConfig;
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberAuthRequest;
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberAuthResponse;
 import online.partyrun.partyrunauthenticationservice.domain.member.entity.Member;
 import online.partyrun.partyrunauthenticationservice.domain.member.entity.Role;
+import online.partyrun.partyrunauthenticationservice.domain.member.event.Event;
+import online.partyrun.partyrunauthenticationservice.domain.member.event.MemberEventPublisher;
 import online.partyrun.partyrunauthenticationservice.domain.member.exception.MemberNotFoundException;
 import online.partyrun.partyrunauthenticationservice.domain.member.repository.MemberRepository;
 
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Import;
 
 import java.util.Set;
@@ -26,6 +31,8 @@ class MemberServiceTest {
 
     @Autowired MemberService memberService;
     @Autowired MemberRepository memberRepository;
+    @Autowired ApplicationEventPublisher eventPublisher;
+    @Autowired MemberEventPublisher memberEventPublisher;
 
     String authId = "authId";
     String name = "박현준";
@@ -46,6 +53,10 @@ class MemberServiceTest {
         void getMember() {
             MemberAuthResponse response = memberService.getMember(memberAuthRequest);
             assertAll(
+                    () ->
+                            then(eventPublisher)
+                                    .should(times(0))
+                                    .publishEvent(Event.create(response.id())),
                     () -> assertThat(response.id()).isNotNull(),
                     () -> assertThat(response.authId()).isEqualTo(member.getAuthId()),
                     () -> assertThat(response.name()).isEqualTo(member.getName()),
@@ -62,6 +73,10 @@ class MemberServiceTest {
         void getMember() {
             MemberAuthResponse response = memberService.getMember(memberAuthRequest);
             assertAll(
+                    () ->
+                            then(memberEventPublisher)
+                                    .should(times(1))
+                                    .publish(Event.create(response.id())),
                     () -> assertThat(response.id()).isNotNull(),
                     () -> assertThat(response.authId()).isEqualTo(memberAuthRequest.authId()),
                     () -> assertThat(response.name()).isEqualTo(memberAuthRequest.name()),
@@ -81,8 +96,18 @@ class MemberServiceTest {
             assertThat(memberService.findMember(savedMember.getId())).isNotNull();
 
             memberService.deleteMember(savedMember.getId());
-            assertThatThrownBy(() -> memberService.findMember(savedMember.getId()))
-                    .isInstanceOf(MemberNotFoundException.class);
+            Assertions.assertAll(
+                    () ->
+                            then(eventPublisher)
+                                    .should(times(1))
+                                    .publishEvent(Event.delete(savedMember.getId())),
+                    () ->
+                            then(memberEventPublisher)
+                                    .should(times(1))
+                                    .publish(Event.delete(savedMember.getId())),
+                    () ->
+                            assertThatThrownBy(() -> memberService.findMember(savedMember.getId()))
+                                    .isInstanceOf(MemberNotFoundException.class));
         }
     }
 }
