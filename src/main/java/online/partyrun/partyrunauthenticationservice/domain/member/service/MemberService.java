@@ -17,13 +17,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 public class MemberService {
     MemberRepository memberRepository;
     ApplicationEventPublisher eventPublisher;
 
-    @Transactional
     public MemberAuthResponse getMember(MemberAuthRequest request) {
         final Member member =
                 memberRepository
@@ -43,13 +43,13 @@ public class MemberService {
         return memberRepository.findById(id).orElseThrow(() -> new MemberNotFoundException(id));
     }
 
+    @Transactional(readOnly = true)
     public MembersResponse findMembers(List<String> ids) {
         final List<Member> members = memberRepository.findAllById(ids);
 
         return MembersResponse.from(members);
     }
 
-    @Transactional
     public MessageResponse deleteMember(String id) {
         final Member member = getMember(id);
         memberRepository.delete(member);
