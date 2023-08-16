@@ -19,8 +19,8 @@ public class NotificationService {
 
     MemberEventPublisher publisher;
 
-    @TransactionalEventListener(condition = "#event.isCreated()")
-    public void notifyMemberCreated(Event event) {
+    @TransactionalEventListener
+    public void notifyMemberEvent(Event event) {
         publisher.publish(event);
     }
 }
