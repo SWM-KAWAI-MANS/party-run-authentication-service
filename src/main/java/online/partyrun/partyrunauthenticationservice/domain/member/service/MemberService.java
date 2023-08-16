@@ -34,10 +34,13 @@ public class MemberService {
 
     @Transactional(readOnly = true)
     public MemberResponse findMember(String id) {
-        final Member member =
-                memberRepository.findById(id).orElseThrow(() -> new MemberNotFoundException(id));
+        final Member member = getMember(id);
 
         return new MemberResponse(member);
+    }
+
+    private Member getMember(String id) {
+        return memberRepository.findById(id).orElseThrow(() -> new MemberNotFoundException(id));
     }
 
     public MembersResponse findMembers(List<String> ids) {
@@ -48,7 +51,9 @@ public class MemberService {
 
     @Transactional
     public MessageResponse deleteMember(String id) {
-        memberRepository.deleteById(id);
+        final Member member = getMember(id);
+        memberRepository.delete(member);
+
         eventPublisher.publishEvent(Event.delete(id));
 
         return new MessageResponse();
