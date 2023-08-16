@@ -46,6 +46,7 @@ public class MemberService {
         return MembersResponse.from(members);
     }
 
+    @Transactional
     public MessageResponse deleteMember(String id) {
         memberRepository.deleteById(id);
         eventPublisher.publishEvent(Event.delete(id));
