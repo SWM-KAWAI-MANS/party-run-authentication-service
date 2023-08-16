@@ -6,9 +6,11 @@ import lombok.experimental.FieldDefaults;
 
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.*;
 import online.partyrun.partyrunauthenticationservice.domain.member.entity.Member;
+import online.partyrun.partyrunauthenticationservice.domain.member.event.Event;
 import online.partyrun.partyrunauthenticationservice.domain.member.exception.MemberNotFoundException;
 import online.partyrun.partyrunauthenticationservice.domain.member.repository.MemberRepository;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberService {
     MemberRepository memberRepository;
+    ApplicationEventPublisher eventPublisher;
 
     @Transactional
     public MemberAuthResponse getMember(MemberAuthRequest request) {
@@ -45,6 +48,7 @@ public class MemberService {
 
     public MessageResponse deleteMember(String id) {
         memberRepository.deleteById(id);
+        eventPublisher.publishEvent(Event.delete(id));
 
         return new MessageResponse();
     }
