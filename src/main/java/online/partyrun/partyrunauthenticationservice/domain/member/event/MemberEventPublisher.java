@@ -1,8 +1,9 @@
 package online.partyrun.partyrunauthenticationservice.domain.member.event;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.awspring.cloud.sns.core.SnsNotification;
+import io.awspring.cloud.sns.core.SnsOperations;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
@@ -11,34 +12,23 @@ import online.partyrun.partyrunauthenticationservice.global.exception.InternalSe
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import software.amazon.awssdk.services.sns.SnsClient;
 import software.amazon.awssdk.services.sns.model.PublishRequest;
 
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class MemberEventPublisher {
 
+    SnsOperations snsOperations;
     String arn;
-    SnsClient snsClient;
-    ObjectMapper objectMapper;
 
     public MemberEventPublisher(
-            @Value("${aws.sns.arn}") String arn, SnsClient snsClient, ObjectMapper objectMapper) {
+            @Value("${spring.cloud.aws.sns.arn}") String arn, SnsOperations snsOperations) {
         this.arn = arn;
-        this.snsClient = snsClient;
-        this.objectMapper = objectMapper;
+        this.snsOperations = snsOperations;
     }
 
     public void publish(Event event) {
-        try {
-            final PublishRequest request =
-                    PublishRequest.builder()
-                            .topicArn(this.arn)
-                            .message(objectMapper.writeValueAsString(event))
-                            .build();
-            snsClient.publish(request);
-        } catch (JsonProcessingException e) {
-            throw new InternalServerErrorException(String.format("%s 이벤트를 발행하는데에 실패했습니다.", event));
-        }
+        final SnsNotification<Event> notification = SnsNotification.of(event);
+        snsOperations.sendNotification(arn, notification);
     }
 }
