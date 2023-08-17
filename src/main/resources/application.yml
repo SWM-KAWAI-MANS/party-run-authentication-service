@@ -9,13 +9,6 @@ auth:
   filter:
     exclusions: auth, auth/access
 
-aws:
-  sns:
-    access-key: ${AWS_SNS_ACCESS_KEY}
-    secret-key: ${AWS_SNS_SECRET_KEY}
-    region: ${AWS_SNS_REGION}
-    arn: ${AWS_SNS_ARN}
-
 ---
 
 spring:
@@ -45,15 +38,18 @@ spring:
     hibernate:
       ddl-auto: create-drop
 
+  cloud:
+    aws:
+      credentials:
+        access-key: "test aws sns access key"
+        secret-key: "test aws sns secret key"
+      region:
+        static: "test aws sns region"
+      sns:
+        arn: "test aws sns arn"
+
 firebase:
   secret: "test firebase secret"
-
-aws:
-  sns:
-    access-key: "test aws sns access key"
-    secret-key: "test aws sns secret key"
-    region: "test aws sns region"
-    arn: "test aws sns arn"
 
 jwt:
   access-secret-key: "asfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasdfasdfasdfaasfasdfasdfadfasd"
@@ -80,6 +76,16 @@ spring:
   data:
     redis:
       url: ${REDIS_URL}
+
+  cloud:
+    aws:
+      credentials:
+        access-key: ${AWS_SNS_ACCESS_KEY}
+        secret-key: ${AWS_SNS_SECRET_KEY}
+      region:
+        static: ${AWS_SNS_REGION}
+      sns:
+        arn: ${AWS_SNS_ARN}
 
 jwt:
   access-secret-key: ${JWT_ACCESS_SECRET_KEY}
@@ -112,6 +118,17 @@ spring:
   data:
     redis:
       url: ${REDIS_URL}
+
+  cloud:
+    aws:
+      credentials:
+        access-key: ${AWS_SNS_ACCESS_KEY}
+        secret-key: ${AWS_SNS_SECRET_KEY}
+      region:
+        static: ${AWS_SNS_REGION}
+      sns:
+        arn: ${AWS_SNS_ARN}
+
 jwt:
   access-secret-key: ${JWT_ACCESS_SECRET_KEY}
   access-expire-second: ${JWT_ACCESS_EXPIRE_LENGTH}
@@ -143,6 +160,16 @@ spring:
   data:
     redis:
       url: ${REDIS_URL}
+
+  cloud:
+    aws:
+      credentials:
+        access-key: ${AWS_SNS_ACCESS_KEY}
+        secret-key: ${AWS_SNS_SECRET_KEY}
+      region:
+        static: ${AWS_SNS_REGION}
+      sns:
+        arn: ${AWS_SNS_ARN}
 
 jwt:
   access-secret-key: ${JWT_ACCESS_SECRET_KEY}
