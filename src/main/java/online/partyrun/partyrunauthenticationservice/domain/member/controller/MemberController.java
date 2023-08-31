@@ -40,7 +40,7 @@ public class MemberController {
 
     @PatchMapping("name")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateName(Authentication auth, @Valid MemberNameUpdateRequest request) {
+    public void updateName(Authentication auth, @Valid @RequestBody MemberNameUpdateRequest request) {
         memberService.updateName(auth.getName(), request);
     }
 }
