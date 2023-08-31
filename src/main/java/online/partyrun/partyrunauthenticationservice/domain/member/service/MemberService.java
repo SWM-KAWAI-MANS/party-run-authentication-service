@@ -58,4 +58,9 @@ public class MemberService {
 
         return new MessageResponse();
     }
+
+    public void updateName(String id, MemberNameUpdateRequest request) {
+        final Member member = getMember(id);
+        member.updateName(request.name());
+    }
 }

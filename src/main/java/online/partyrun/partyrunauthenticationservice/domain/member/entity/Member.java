@@ -9,6 +9,7 @@ import lombok.experimental.FieldDefaults;
 
 import online.partyrun.partyrunauthenticationservice.domain.member.event.Event;
 
+import org.checkerframework.checker.units.qual.N;
 import org.checkerframework.common.aliasing.qual.Unique;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -55,6 +56,10 @@ public class Member extends AbstractAggregateRoot<Member> {
         this.profile = new Profile(DEFAULT_PROFILE);
 
         registerEvent(Event.create(this.id));
+    }
+
+    public void updateName(String name) {
+        this.name = new Name(name);
     }
 
     public String getName() {
