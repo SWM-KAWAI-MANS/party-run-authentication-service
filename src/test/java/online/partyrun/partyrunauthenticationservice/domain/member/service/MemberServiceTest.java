@@ -9,6 +9,7 @@ import static org.mockito.Mockito.times;
 import online.partyrun.partyrunauthenticationservice.TestConfig;
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberAuthRequest;
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberAuthResponse;
+import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberNameUpdateRequest;
 import online.partyrun.partyrunauthenticationservice.domain.member.entity.Member;
 import online.partyrun.partyrunauthenticationservice.domain.member.entity.Role;
 import online.partyrun.partyrunauthenticationservice.domain.member.event.Event;
@@ -29,10 +30,14 @@ import java.util.Set;
 @DisplayName("MemberService")
 class MemberServiceTest {
 
-    @Autowired MemberService memberService;
-    @Autowired MemberRepository memberRepository;
-    @Autowired ApplicationEventPublisher eventPublisher;
-    @Autowired MemberEventPublisher memberEventPublisher;
+    @Autowired
+    MemberService memberService;
+    @Autowired
+    MemberRepository memberRepository;
+    @Autowired
+    ApplicationEventPublisher eventPublisher;
+    @Autowired
+    MemberEventPublisher memberEventPublisher;
 
     String authId = "authId";
     String name = "박현준";
@@ -108,6 +113,29 @@ class MemberServiceTest {
                     () ->
                             assertThatThrownBy(() -> memberService.findMember(savedMember.getId()))
                                     .isInstanceOf(MemberNotFoundException.class));
+        }
+    }
+
+    @Nested
+    @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+    class 멤버의_이름을_변경할_때 {
+
+        @Test
+        @DisplayName("멤버가 존재하지 않으면 예외를 던진다.")
+        void throwException() {
+            assertThatThrownBy(() -> memberService.updateName("invalid member id", new MemberNameUpdateRequest("new name")))
+                    .isInstanceOf(MemberNotFoundException.class);
+        }
+
+        @Test
+        @DisplayName("이름을 변경한다.")
+        void updateName() {
+            Member member = memberRepository.save(new Member("authId", name));
+
+            final String newName = "박성우";
+            memberService.updateName(member.getId(), new MemberNameUpdateRequest(newName));
+
+            assertThat(memberRepository.findById(member.getId()).orElseThrow().getName()).isEqualTo(newName);
         }
     }
 }

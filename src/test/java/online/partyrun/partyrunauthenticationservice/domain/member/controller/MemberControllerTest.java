@@ -1,20 +1,13 @@
 package online.partyrun.partyrunauthenticationservice.domain.member.controller;
 
-import static org.mockito.BDDMockito.given;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import online.partyrun.partyrunauthenticationservice.domain.auth.controller.ControllerTestConfig;
+import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberNameUpdateRequest;
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberResponse;
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MembersResponse;
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MessageResponse;
 import online.partyrun.partyrunauthenticationservice.domain.member.exception.MemberNotFoundException;
 import online.partyrun.partyrunauthenticationservice.domain.member.service.MemberService;
 import online.partyrun.testmanager.docs.RestControllerTest;
-
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
@@ -24,6 +17,13 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureDataJpa
 @Import(ControllerTestConfig.class)
@@ -139,6 +139,32 @@ class MemberControllerTest extends RestControllerTest {
             actions.andExpect(status().isOk()).andExpect(content().json(toRequestBody(response)));
 
             setPrintDocs(actions, "find members");
+        }
+    }
+
+    @Nested
+    @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+    class 멤버의_이름을_변경할_때 {
+
+        @Test
+        @DisplayName("No Content를 응답한다.")
+        void successUpdateMember() throws Exception {
+            final MemberNameUpdateRequest request = new MemberNameUpdateRequest("새로운이름");
+
+            willDoNothing().given(memberService).updateName("defaultUser", request);
+            ResultActions actions =
+                    mockMvc.perform(
+                            patch("/members/name")
+                                    .with(csrf())
+                                    .header(
+                                            "Authorization",
+                                            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c")
+                                    .contentType(MediaType.APPLICATION_JSON)
+                                    .characterEncoding(StandardCharsets.UTF_8)
+                                    .content(toRequestBody(request)));
+            actions.andExpect(status().isNoContent());
+
+            setPrintDocs(actions, "update member name");
         }
     }
 }

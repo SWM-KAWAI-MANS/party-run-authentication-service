@@ -1,14 +1,15 @@
 package online.partyrun.partyrunauthenticationservice.domain.member.controller;
 
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-
+import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberNameUpdateRequest;
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberResponse;
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MembersResponse;
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MessageResponse;
 import online.partyrun.partyrunauthenticationservice.domain.member.service.MemberService;
-
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,5 +36,11 @@ public class MemberController {
     @DeleteMapping("me")
     public MessageResponse deleteMember(Authentication auth) {
         return memberService.deleteMember(auth.getName());
+    }
+
+    @PatchMapping("name")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateName(Authentication auth, @Valid @RequestBody MemberNameUpdateRequest request) {
+        memberService.updateName(auth.getName(), request);
     }
 }
