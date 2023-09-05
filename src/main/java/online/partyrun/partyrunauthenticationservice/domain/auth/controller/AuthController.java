@@ -10,9 +10,11 @@ import online.partyrun.jwtmanager.dto.JwtToken;
 import online.partyrun.partyrunauthenticationservice.domain.auth.dto.IdTokenRequest;
 import online.partyrun.partyrunauthenticationservice.domain.auth.service.AuthService;
 
+import online.partyrun.partyrunauthenticationservice.global.logging.Logging;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+@Logging
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("auth")
