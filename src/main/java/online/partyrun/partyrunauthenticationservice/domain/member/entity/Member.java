@@ -30,9 +30,6 @@ import java.util.UUID;
 @EntityListeners(AuditingEntityListener.class)
 public class Member extends AbstractAggregateRoot<Member> {
 
-    private static final String DEFAULT_PROFILE =
-            "https://avatars.githubusercontent.com/u/134378498?s=400&u=72e57bdb2eafcad3d0c8b8e137349397eefce35f&v=4";
-
     @Id private String id;
 
     @Unique String authId;
@@ -53,7 +50,7 @@ public class Member extends AbstractAggregateRoot<Member> {
         this.id = UUID.randomUUID().toString();
         this.authId = authId;
         this.name = new Name(name);
-        this.profile = new Profile(DEFAULT_PROFILE);
+        this.profile = new Profile();
 
         registerEvent(Event.create(this.id));
     }
@@ -68,5 +65,9 @@ public class Member extends AbstractAggregateRoot<Member> {
 
     public String getProfile() {
         return this.profile.getValue();
+    }
+
+    public void updateProfile(Profile profile) {
+        this.profile = profile;
     }
 }

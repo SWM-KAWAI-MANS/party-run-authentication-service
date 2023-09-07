@@ -13,6 +13,7 @@ import online.partyrun.partyrunauthenticationservice.global.logging.Logging;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -44,5 +45,11 @@ public class MemberController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateName(Authentication auth, @Valid @RequestBody MemberNameUpdateRequest request) {
         memberService.updateName(auth.getName(), request);
+    }
+
+    @PatchMapping("profile")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateProfile(Authentication auth, @RequestPart MultipartFile profile) {
+        memberService.updateProfile(auth.getName(), profile);
     }
 }

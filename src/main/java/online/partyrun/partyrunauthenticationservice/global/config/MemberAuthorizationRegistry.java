@@ -12,10 +12,10 @@ public class MemberAuthorizationRegistry implements AuthorizationRegistry {
 
     @Override
     public AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry
-            match(
-                    AuthorizeHttpRequestsConfigurer<HttpSecurity>
-                                    .AuthorizationManagerRequestMatcherRegistry
-                            r) {
+    match(
+            AuthorizeHttpRequestsConfigurer<HttpSecurity>
+                    .AuthorizationManagerRequestMatcherRegistry
+                    r) {
         return r.requestMatchers(HttpMethod.POST, "/auth")
                 .permitAll()
                 .requestMatchers(HttpMethod.POST, "/auth/access")

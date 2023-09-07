@@ -3,6 +3,8 @@ package online.partyrun.partyrunauthenticationservice.domain.member.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
@@ -11,17 +13,22 @@ import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberAut
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberAuthResponse;
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberNameUpdateRequest;
 import online.partyrun.partyrunauthenticationservice.domain.member.entity.Member;
+import online.partyrun.partyrunauthenticationservice.domain.member.entity.Profile;
 import online.partyrun.partyrunauthenticationservice.domain.member.entity.Role;
 import online.partyrun.partyrunauthenticationservice.domain.member.event.Event;
 import online.partyrun.partyrunauthenticationservice.domain.member.event.MemberEventPublisher;
 import online.partyrun.partyrunauthenticationservice.domain.member.exception.MemberNotFoundException;
 import online.partyrun.partyrunauthenticationservice.domain.member.repository.MemberRepository;
 
+import online.partyrun.partyrunauthenticationservice.domain.member.repository.ProfileRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Import;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Set;
 
@@ -38,6 +45,9 @@ class MemberServiceTest {
     ApplicationEventPublisher eventPublisher;
     @Autowired
     MemberEventPublisher memberEventPublisher;
+
+    @MockBean
+    ProfileRepository profileRepository;
 
     String authId = "authId";
     String name = "박현준";
@@ -130,12 +140,25 @@ class MemberServiceTest {
         @Test
         @DisplayName("이름을 변경한다.")
         void updateName() {
-            Member member = memberRepository.save(new Member("authId", name));
+            Member member = memberRepository.save(new Member(authId, name));
 
             final String newName = "박성우";
             memberService.updateName(member.getId(), new MemberNameUpdateRequest(newName));
 
             assertThat(memberRepository.findById(member.getId()).orElseThrow().getName()).isEqualTo(newName);
         }
+    }
+
+    @Test
+    @DisplayName("profile 사진을 변경한다")
+    void updateProfile() {
+        Member member = memberRepository.save(new Member(authId, name));
+        final String expectUrl = "http://test.com/test.jpg";
+        given(profileRepository.save(any(MultipartFile.class))).willReturn(new Profile(expectUrl));
+        final MockMultipartFile profileImage = new MockMultipartFile("profile", new byte[0]);
+
+        memberService.updateProfile(member.getId(), profileImage);
+
+        assertThat(memberService.findMember(member.getId()).profile()).isEqualTo(expectUrl);
     }
 }
