@@ -163,7 +163,8 @@ spring:
 
   data:
     redis:
-      url: ${REDIS_URL}
+      cluster:
+        nodes: ${REDIS_CLUSTER_NODES}
 
   cloud:
     aws:
