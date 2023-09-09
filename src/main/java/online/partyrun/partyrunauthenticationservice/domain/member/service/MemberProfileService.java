@@ -3,7 +3,7 @@ package online.partyrun.partyrunauthenticationservice.domain.member.service;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import online.partyrun.partyrunauthenticationservice.domain.member.entity.Member;
-import online.partyrun.partyrunauthenticationservice.domain.member.exception.InvalidImageFileException;
+import online.partyrun.partyrunauthenticationservice.domain.member.exception.InvalidMultipartImageException;
 import online.partyrun.partyrunauthenticationservice.domain.member.exception.MemberNotFoundException;
 import online.partyrun.partyrunauthenticationservice.domain.member.repository.MemberRepository;
 import online.partyrun.partyrunauthenticationservice.domain.member.repository.ProfileRepository;
@@ -50,7 +50,7 @@ public class MemberProfileService {
 
     private void validateFile(MultipartFile imageFile) {
         if(isNotAllowFile(imageFile)) {
-            throw new InvalidImageFileException();
+            throw new InvalidMultipartImageException();
         }
     }
 

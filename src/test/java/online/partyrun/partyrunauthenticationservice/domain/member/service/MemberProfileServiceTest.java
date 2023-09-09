@@ -2,7 +2,7 @@ package online.partyrun.partyrunauthenticationservice.domain.member.service;
 
 import online.partyrun.partyrunauthenticationservice.TestConfig;
 import online.partyrun.partyrunauthenticationservice.domain.member.entity.Member;
-import online.partyrun.partyrunauthenticationservice.domain.member.exception.InvalidImageFileException;
+import online.partyrun.partyrunauthenticationservice.domain.member.exception.InvalidMultipartImageException;
 import online.partyrun.partyrunauthenticationservice.domain.member.repository.MemberRepository;
 import online.partyrun.partyrunauthenticationservice.domain.member.repository.ProfileRepository;
 import org.junit.jupiter.api.*;
@@ -64,7 +64,7 @@ class MemberProfileServiceTest {
         @DisplayName("MultipartFile이 잘못되었으면 예외 처리를 한다")
         void throwException(MultipartFile file) {
             assertThatThrownBy(() -> memberProfileService.updateProfile(authId, file))
-                    .isInstanceOf(InvalidImageFileException.class);
+                    .isInstanceOf(InvalidMultipartImageException.class);
         }
     }
 
@@ -85,7 +85,7 @@ class MemberProfileServiceTest {
         @DisplayName("에러를 반환하지 않는다")
         void notThrowException(MultipartFile file) {
             assertThatThrownBy(() ->  memberProfileService.updateProfile(authId, file))
-                    .isNotExactlyInstanceOf(InvalidImageFileException.class);
+                    .isNotExactlyInstanceOf(InvalidMultipartImageException.class);
         }
     }
 

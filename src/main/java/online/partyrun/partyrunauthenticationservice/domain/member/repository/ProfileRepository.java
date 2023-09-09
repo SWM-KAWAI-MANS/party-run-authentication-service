@@ -3,7 +3,7 @@ package online.partyrun.partyrunauthenticationservice.domain.member.repository;
 import io.awspring.cloud.s3.S3Template;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
-import online.partyrun.partyrunauthenticationservice.domain.member.exception.InvalidImageFileException;
+import online.partyrun.partyrunauthenticationservice.domain.member.exception.InvalidFileStreamException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,7 +31,7 @@ public class ProfileRepository {
         try {
             return file.getInputStream();
         } catch (IOException e) {
-            throw new InvalidImageFileException();
+            throw new InvalidFileStreamException();
         }
     }
 }
