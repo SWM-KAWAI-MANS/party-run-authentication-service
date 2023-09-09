@@ -15,15 +15,12 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
-import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -35,6 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class MemberControllerTest extends RestControllerTest {
 
     @Autowired MemberService memberService;
+
 
     @Nested
     @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -179,7 +177,6 @@ class MemberControllerTest extends RestControllerTest {
         @Test
         @DisplayName("No Content를 응답한다.")
         void successUpdateProfile() throws Exception {
-            willDoNothing().given(memberService).updateProfile(any(String.class), any(MultipartFile.class));
             ResultActions actions =
                     mockMvc.perform(
                             multipart(HttpMethod.PATCH,"/members/profile")

@@ -1,22 +1,16 @@
 package online.partyrun.partyrunauthenticationservice.domain.member.service;
 
-import io.awspring.cloud.s3.S3Template;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.*;
 import online.partyrun.partyrunauthenticationservice.domain.member.entity.Member;
-import online.partyrun.partyrunauthenticationservice.domain.member.entity.Profile;
 import online.partyrun.partyrunauthenticationservice.domain.member.event.Event;
 import online.partyrun.partyrunauthenticationservice.domain.member.exception.MemberNotFoundException;
 import online.partyrun.partyrunauthenticationservice.domain.member.repository.MemberRepository;
-
-import online.partyrun.partyrunauthenticationservice.domain.member.repository.ProfileRepository;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -25,9 +19,9 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 public class MemberService {
+
     MemberRepository memberRepository;
     ApplicationEventPublisher eventPublisher;
-    ProfileRepository profileRepository;
 
     public MemberAuthResponse getMember(MemberAuthRequest request) {
         final Member member =
@@ -67,10 +61,5 @@ public class MemberService {
     public void updateName(String id, MemberNameUpdateRequest request) {
         final Member member = getMember(id);
         member.updateName(request.name());
-    }
-
-    public void updateProfile(String id, MultipartFile imageFile) {
-        final Profile profile = profileRepository.save(imageFile);
-        getMember(id).updateProfile(profile);
     }
 }

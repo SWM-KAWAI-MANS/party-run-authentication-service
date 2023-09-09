@@ -1,15 +1,11 @@
 package online.partyrun.partyrunauthenticationservice.domain.member.entity;
 
 import jakarta.persistence.*;
-
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-
 import online.partyrun.partyrunauthenticationservice.domain.member.event.Event;
-
-import org.checkerframework.checker.units.qual.N;
 import org.checkerframework.common.aliasing.qual.Unique;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -67,7 +63,7 @@ public class Member extends AbstractAggregateRoot<Member> {
         return this.profile.getValue();
     }
 
-    public void updateProfile(Profile profile) {
-        this.profile = profile;
+    public void updateProfile(String profile) {
+        this.profile = new Profile(profile);
     }
 }
