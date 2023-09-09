@@ -8,16 +8,13 @@ firebase:
 auth:
   filter:
     exclusions: auth, auth/access
+multipart:
+  profile-image:
+    allow-file-type: png,jpg,jpeg
 spring:
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
-
-multipart:
-  profile-image:
-    allow-file-type: png,jpg,jpeg
-
-spring:
   profiles:
     active: test
