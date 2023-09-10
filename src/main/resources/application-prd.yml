@@ -28,7 +28,8 @@ spring:
         static: ${AWS_SNS_REGION}
       sns:
         arn: ${AWS_SNS_ARN}
-
+      s3:
+        bucket: ${AWS_S3_BUCKET}
 jwt:
   access-secret-key: ${JWT_ACCESS_SECRET_KEY}
   access-expire-second: ${JWT_ACCESS_EXPIRE_LENGTH}
