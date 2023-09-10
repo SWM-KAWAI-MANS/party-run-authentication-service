@@ -17,9 +17,10 @@ import java.util.Objects;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Profile {
+    private static final String DEFAULT_PROFILE = "/profile-image/partyrun-default.png";
 
     @Column(name = "profile")
-    String value;
+    String value = DEFAULT_PROFILE;
 
     public Profile(String value) {
         validateProfile(value);

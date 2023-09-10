@@ -3,13 +3,11 @@ package online.partyrun.partyrunauthenticationservice.domain.member.service;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.*;
 import online.partyrun.partyrunauthenticationservice.domain.member.entity.Member;
 import online.partyrun.partyrunauthenticationservice.domain.member.event.Event;
 import online.partyrun.partyrunauthenticationservice.domain.member.exception.MemberNotFoundException;
 import online.partyrun.partyrunauthenticationservice.domain.member.repository.MemberRepository;
-
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +19,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 public class MemberService {
+
     MemberRepository memberRepository;
     ApplicationEventPublisher eventPublisher;
 

@@ -21,6 +21,9 @@ spring:
         static: ${AWS_SNS_REGION}
       sns:
         arn: ${AWS_SNS_ARN}
+      s3:
+        bucket: ${AWS_S3_BUCKET}
+        image-directory: ${AWS_S3_IMAGE_DIRECTORY}
 
 jwt:
   access-secret-key: ${JWT_ACCESS_SECRET_KEY}

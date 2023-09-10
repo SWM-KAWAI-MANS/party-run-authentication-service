@@ -90,6 +90,7 @@ dependencies {
     implementation 'com.github.maricn:logback-slack-appender:1.6.1'
 
     implementation platform("io.awspring.cloud:spring-cloud-aws-dependencies:3.0.2")
+    implementation 'io.awspring.cloud:spring-cloud-aws-starter-s3'
     implementation 'io.awspring.cloud:spring-cloud-aws-starter-sns'
 
 

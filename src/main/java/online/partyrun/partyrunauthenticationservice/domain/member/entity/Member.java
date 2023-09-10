@@ -1,15 +1,11 @@
 package online.partyrun.partyrunauthenticationservice.domain.member.entity;
 
 import jakarta.persistence.*;
-
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-
 import online.partyrun.partyrunauthenticationservice.domain.member.event.Event;
-
-import org.checkerframework.checker.units.qual.N;
 import org.checkerframework.common.aliasing.qual.Unique;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -29,9 +25,6 @@ import java.util.UUID;
 @Where(clause = "is_deleted = false")
 @EntityListeners(AuditingEntityListener.class)
 public class Member extends AbstractAggregateRoot<Member> {
-
-    private static final String DEFAULT_PROFILE =
-            "https://avatars.githubusercontent.com/u/134378498?s=400&u=72e57bdb2eafcad3d0c8b8e137349397eefce35f&v=4";
 
     @Id private String id;
 
@@ -53,7 +46,7 @@ public class Member extends AbstractAggregateRoot<Member> {
         this.id = UUID.randomUUID().toString();
         this.authId = authId;
         this.name = new Name(name);
-        this.profile = new Profile(DEFAULT_PROFILE);
+        this.profile = new Profile();
 
         registerEvent(Event.create(this.id));
     }
@@ -68,5 +61,9 @@ public class Member extends AbstractAggregateRoot<Member> {
 
     public String getProfile() {
         return this.profile.getValue();
+    }
+
+    public void updateProfile(String profile) {
+        this.profile = new Profile(profile);
     }
 }

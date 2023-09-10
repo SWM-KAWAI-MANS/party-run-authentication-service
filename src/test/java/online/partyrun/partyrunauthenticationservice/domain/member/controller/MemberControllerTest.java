@@ -12,6 +12,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -31,6 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class MemberControllerTest extends RestControllerTest {
 
     @Autowired MemberService memberService;
+
 
     @Nested
     @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -165,6 +167,29 @@ class MemberControllerTest extends RestControllerTest {
             actions.andExpect(status().isNoContent());
 
             setPrintDocs(actions, "update member name");
+        }
+    }
+
+    @Nested
+    @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+    class 맴버의_프로필사진을_변경할_때 {
+
+        @Test
+        @DisplayName("No Content를 응답한다.")
+        void successUpdateProfile() throws Exception {
+            ResultActions actions =
+                    mockMvc.perform(
+                            multipart(HttpMethod.PATCH,"/members/profile")
+                                    .file("profile", new byte[0])
+                                    .with(csrf())
+                                    .header(
+                                            "Authorization",
+                                            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c")
+                                    .contentType(MediaType.MULTIPART_FORM_DATA)
+                                    .characterEncoding(StandardCharsets.UTF_8));
+            actions.andExpect(status().isNoContent());
+
+            setPrintDocs(actions, "update member profile image");
         }
     }
 }

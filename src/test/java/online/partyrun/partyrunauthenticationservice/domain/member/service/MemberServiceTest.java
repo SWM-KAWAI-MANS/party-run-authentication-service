@@ -1,11 +1,5 @@
 package online.partyrun.partyrunauthenticationservice.domain.member.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.mockito.BDDMockito.then;
-import static org.mockito.Mockito.times;
-
 import online.partyrun.partyrunauthenticationservice.TestConfig;
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberAuthRequest;
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberAuthResponse;
@@ -16,7 +10,6 @@ import online.partyrun.partyrunauthenticationservice.domain.member.event.Event;
 import online.partyrun.partyrunauthenticationservice.domain.member.event.MemberEventPublisher;
 import online.partyrun.partyrunauthenticationservice.domain.member.exception.MemberNotFoundException;
 import online.partyrun.partyrunauthenticationservice.domain.member.repository.MemberRepository;
-
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,6 +17,12 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Import;
 
 import java.util.Set;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.times;
 
 @SpringBootTest
 @Import(TestConfig.class)
@@ -130,7 +129,7 @@ class MemberServiceTest {
         @Test
         @DisplayName("이름을 변경한다.")
         void updateName() {
-            Member member = memberRepository.save(new Member("authId", name));
+            Member member = memberRepository.save(new Member(authId, name));
 
             final String newName = "박성우";
             memberService.updateName(member.getId(), new MemberNameUpdateRequest(newName));
