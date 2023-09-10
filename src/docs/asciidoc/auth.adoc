@@ -27,5 +27,8 @@ operation::fail to find member[snippets='http-request,http-response']
 === 멤버들 조회
 operation::find members[snippets='http-request,http-response']
 
-=== 멤버들 조회
+=== 닉네임 수정
+operation::update member name[snippets='http-request,http-response']
+
+=== 프로필 수정
 operation::update member profile image[snippets='http-request,http-response']
