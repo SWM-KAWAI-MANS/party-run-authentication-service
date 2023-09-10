@@ -10,6 +10,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -51,11 +55,12 @@ class RefreshTokenRepositoryTest {
 
         @Test
         @DisplayName("시간 초과 이후 조회하면 false를 반환한다.")
-        void notExistsByExpireTime() throws InterruptedException {
+        void notExistsByExpireTime() {
+            ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
             refreshTokenRepository.set(name, refreshToken);
-            Thread.sleep(refreshExpireSecond * 1000);
-
-            assertThat(refreshTokenRepository.existsBy(name, refreshToken)).isFalse();
+            executorService.schedule(() -> {
+                assertThat(refreshTokenRepository.existsBy(name, refreshToken)).isFalse();
+            }, refreshExpireSecond, TimeUnit.SECONDS);
         }
 
         @ParameterizedTest
