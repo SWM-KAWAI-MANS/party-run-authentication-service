@@ -13,10 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.InputStream;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -41,7 +40,7 @@ class MemberProfileServiceTest {
     @DisplayName("profile 사진을 변경한다")
     void updateProfile() {
         Member member = memberRepository.save(new Member(authId, name));
-        final MockMultipartFile profileImage = new MockMultipartFile("profile.png");
+        final MockMultipartFile profileImage = new CustomMockMultipartFile("profile.png");
         final String before = memberService.findMember(member.getId()).profile();
         memberProfileService.updateProfile(member.getId(), profileImage);
 
@@ -53,9 +52,8 @@ class MemberProfileServiceTest {
     class multipartFile이_잘못되었으면 {
         static Stream<Arguments> invalidMultipartArgs() {
             return Stream.of(
-                    Arguments.of(new MockMultipartFile(null)),
-                    Arguments.of(new MockMultipartFile("hello.txt")),
-                    Arguments.of(new MockMultipartFile("hello"))
+                    Arguments.of(new CustomMockMultipartFile("hello.txt")),
+                    Arguments.of(new CustomMockMultipartFile("hello"))
             );
         }
 
@@ -74,9 +72,9 @@ class MemberProfileServiceTest {
 
         static Stream<Arguments> multipartArgs() {
             return Stream.of(
-                    Arguments.of(new MockMultipartFile("hello.jpeg")),
-                    Arguments.of(new MockMultipartFile("hello.jpg")),
-                    Arguments.of(new MockMultipartFile("hello.png"))
+                    Arguments.of(new CustomMockMultipartFile("hello.jpeg")),
+                    Arguments.of(new CustomMockMultipartFile("hello.jpg")),
+                    Arguments.of(new CustomMockMultipartFile("hello.png"))
             );
         }
 
@@ -92,51 +90,14 @@ class MemberProfileServiceTest {
 }
 
 
-class MockMultipartFile implements MultipartFile {
-    String name;
-
-    public MockMultipartFile(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String getName() {
-        return name;
+class CustomMockMultipartFile extends MockMultipartFile {
+    public CustomMockMultipartFile(String name) {
+        super(name, new byte[1]);
     }
 
     @Override
     public String getOriginalFilename() {
-        return name;
-    }
-
-    @Override
-    public String getContentType() {
-        return null;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public long getSize() {
-        return 0;
-    }
-
-    @Override
-    public byte[] getBytes() {
-        return new byte[0];
-    }
-
-    @Override
-    public InputStream getInputStream() {
-        return null;
-    }
-
-    @Override
-    public void transferTo(File dest) throws IllegalStateException {
-
+        return this.getName();
     }
 }
 
