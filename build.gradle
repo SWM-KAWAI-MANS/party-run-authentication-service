@@ -84,7 +84,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.google.firebase:firebase-admin:9.1.1'
-    implementation 'com.github.SWM-KAWAI-MANS:jwt-manager:1.3.0'
+    implementation 'com.github.SWM-KAWAI-MANS:jwt-manager:1.4.0'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'com.github.SWM-KAWAI-MANS:spring-security-authorization-manager:1.0.1'
     implementation 'com.github.maricn:logback-slack-appender:1.6.1'
