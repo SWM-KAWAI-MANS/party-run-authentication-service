@@ -3,7 +3,7 @@ package online.partyrun.partyrunauthenticationservice.domain.auth.service.fireba
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-
+import online.partyrun.jwtmanager.JwtExtractor;
 import online.partyrun.jwtmanager.JwtGenerator;
 import online.partyrun.jwtmanager.dto.JwtToken;
 import online.partyrun.partyrunauthenticationservice.domain.auth.exception.NoSuchRefreshTokenException;
@@ -12,9 +12,7 @@ import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberAut
 import online.partyrun.partyrunauthenticationservice.domain.member.dto.MemberAuthResponse;
 import online.partyrun.partyrunauthenticationservice.domain.member.entity.Role;
 import online.partyrun.partyrunauthenticationservice.domain.member.service.MemberService;
-import online.partyrun.partyrunauthenticationservice.domain.token.entity.RefreshToken;
-import online.partyrun.partyrunauthenticationservice.domain.token.repository.RefreshTokenRepository;
-
+import online.partyrun.partyrunauthenticationservice.domain.auth.repository.RefreshTokenRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +26,9 @@ public class FirebaseAuthService implements AuthService {
     MemberService memberService;
     FirebaseHandler firebaseHandler;
     JwtGenerator jwtGenerator;
+    JwtExtractor jwtExtractor;
     RefreshTokenRepository refreshTokenRepository;
+
 
     @Override
     @Transactional
@@ -37,20 +37,31 @@ public class FirebaseAuthService implements AuthService {
         final MemberAuthResponse member =
                 memberService.getMember(
                         new MemberAuthRequest(tokenResponse.uid(), tokenResponse.name()));
+        final String memberId = member.id();
+
         final Set<String> roles =
                 member.roles().stream().map(Role::name).collect(Collectors.toSet());
-        final JwtToken jwtToken = jwtGenerator.generate(member.id(), roles);
-        final RefreshToken refreshToken = new RefreshToken(jwtToken.refreshToken(), member.id());
-        refreshTokenRepository.save(refreshToken);
+        final JwtToken jwtToken = jwtGenerator.generate(memberId, roles);
+
+        refreshTokenRepository.set(memberId, jwtToken.refreshToken());
         return jwtToken;
     }
 
     @Override
     @Transactional(readOnly = true)
     public JwtToken refreshAccessToken(String refreshToken) {
-        if (!refreshTokenRepository.existsById(refreshToken)) {
+        final String memberId = jwtExtractor.extractRefreshToken(refreshToken).id();
+        validateRefreshToken(memberId, refreshToken);
+
+        final JwtToken jwtToken = jwtGenerator.refresh(refreshToken);
+
+        refreshTokenRepository.set(memberId, jwtToken.refreshToken());
+        return jwtToken;
+    }
+
+    private void validateRefreshToken(String memberId, String refreshToken) {
+        if (!refreshTokenRepository.existsBy(memberId, refreshToken)) {
             throw new NoSuchRefreshTokenException(refreshToken);
         }
-        return jwtGenerator.refresh(refreshToken);
     }
 }

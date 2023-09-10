@@ -14,8 +14,7 @@ import online.partyrun.partyrunauthenticationservice.domain.auth.service.firebas
 import online.partyrun.partyrunauthenticationservice.domain.auth.service.firebase.FirebaseHandler;
 import online.partyrun.partyrunauthenticationservice.domain.auth.service.firebase.TokenResponse;
 import online.partyrun.partyrunauthenticationservice.domain.member.entity.Role;
-import online.partyrun.partyrunauthenticationservice.domain.token.entity.RefreshToken;
-import online.partyrun.partyrunauthenticationservice.domain.token.repository.RefreshTokenRepository;
+import online.partyrun.partyrunauthenticationservice.domain.auth.repository.RefreshTokenRepository;
 import online.partyrun.testmanager.redis.EnableRedisTest;
 
 import org.junit.jupiter.api.*;
@@ -77,13 +76,12 @@ class FirebaseAuthServiceTest {
     @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
     class refreshToken이_주어지면 {
 
-        String refreshToken =
-                jwtGenerator.generate(idToken, Set.of(Role.ROLE_USER.name())).refreshToken();
+        String refreshToken = jwtGenerator.generate(name, Set.of(Role.ROLE_USER.name())).refreshToken();
 
         @Test
         @DisplayName("accessToken을 반환한다.")
         void returnAccessToken() {
-            refreshTokenRepository.save(new RefreshToken(refreshToken, name));
+            refreshTokenRepository.set(name, refreshToken);
 
             JwtToken result = firebaseAuthService.refreshAccessToken(refreshToken);
             assertAll(
@@ -96,7 +94,7 @@ class FirebaseAuthServiceTest {
     @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
     class 존재하지_않는_refreshToken이_주어지면 {
 
-        String invalidRefreshToken = "invalidRefreshToken";
+        String invalidRefreshToken = jwtGenerator.generate("invalidId", Set.of(Role.ROLE_USER.name())).refreshToken();
 
         @Test
         @DisplayName("예외를 던진다")
