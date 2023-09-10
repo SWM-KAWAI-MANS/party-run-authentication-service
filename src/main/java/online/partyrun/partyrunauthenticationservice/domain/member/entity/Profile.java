@@ -17,8 +17,7 @@ import java.util.Objects;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Profile {
-    private static final String DEFAULT_PROFILE =
-            "https://avatars.githubusercontent.com/u/134378498?s=400&u=72e57bdb2eafcad3d0c8b8e137349397eefce35f&v=4";
+    private static final String DEFAULT_PROFILE = "partyrun-default.png";
 
     @Column(name = "profile")
     String value = DEFAULT_PROFILE;
