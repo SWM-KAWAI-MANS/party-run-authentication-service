@@ -23,6 +23,6 @@ public class RefreshTokenRepository {
 
     public boolean existsBy(String memberId, String refreshToken) {
         final String oldRefreshToken = redisTemplate.opsForValue().get(memberId);
-        return !Objects.isNull(oldRefreshToken) && oldRefreshToken.equals(refreshToken);
+        return Objects.nonNull(oldRefreshToken) && oldRefreshToken.equals(refreshToken);
     }
 }
