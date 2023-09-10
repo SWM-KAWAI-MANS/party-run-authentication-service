@@ -17,8 +17,8 @@ public class RefreshTokenRepository {
     @Value("${jwt.refresh-expire-second}")
     private long refreshExpireSecond;
 
-    public void set(String key, String value) {
-        redisTemplate.opsForValue().set(key, value, refreshExpireSecond, TimeUnit.SECONDS);
+    public void set(String memberId, String refreshToken) {
+        redisTemplate.opsForValue().set(memberId, refreshToken, refreshExpireSecond, TimeUnit.SECONDS);
     }
 
     public boolean existsBy(String memberId, String refreshToken) {
