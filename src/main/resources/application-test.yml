@@ -33,6 +33,7 @@ spring:
         arn: "test aws sns arn"
       s3:
         bucket: "test aws s3 arn"
+        image-directory: "image-directory"
 firebase:
   secret: "test firebase secret"
 

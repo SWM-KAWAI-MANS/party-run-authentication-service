@@ -22,17 +22,19 @@ import java.util.UUID;
 public class MemberProfileService {
     ProfileRepository profileRepository;
     MemberRepository memberRepository;
-
     List<String> imageExtensions;
+    String imageDirectory;
 
     public MemberProfileService(
             ProfileRepository profileRepository,
             MemberRepository memberRepository,
-            @Value("${multipart.profile-image.allow-file-type}") List<String> imageExtensions
+            @Value("${multipart.profile-image.allow-file-type}") List<String> imageExtensions,
+            @Value("${spring.cloud.aws.s3.image-directory}") String imageDirectory
     ) {
         this.profileRepository = profileRepository;
         this.memberRepository = memberRepository;
         this.imageExtensions = imageExtensions;
+        this.imageDirectory = imageDirectory;
     }
 
 
@@ -43,13 +45,8 @@ public class MemberProfileService {
         profileRepository.save(imageFile, profileName);
     }
 
-    private Member getMember(String id) {
-        return memberRepository.findById(id)
-                .orElseThrow(() -> new MemberNotFoundException(id));
-    }
-
     private void validateFile(MultipartFile imageFile) {
-        if(isNotAllowFile(imageFile)) {
+        if (isNotAllowFile(imageFile)) {
             throw new InvalidMultipartImageException();
         }
     }
@@ -73,7 +70,11 @@ public class MemberProfileService {
     }
 
     private String generateProfileName(MultipartFile file) {
-        return UUID.randomUUID() + "." + getExtension(file);
+        return imageDirectory + UUID.randomUUID() + "." + getExtension(file);
     }
 
+    private Member getMember(String id) {
+        return memberRepository.findById(id)
+                .orElseThrow(() -> new MemberNotFoundException(id));
+    }
 }
