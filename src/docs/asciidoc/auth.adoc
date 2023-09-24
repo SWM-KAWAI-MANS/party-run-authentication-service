@@ -1,0 +1,34 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+== Auth
+=== 로그인
+operation::success login[snippets='http-request,http-response']
+=== 로그인시 idToken이 null
+operation::idToken is null[snippets='http-request,http-response']
+=== 로그인시 idToken 형식이 잘못됨
+operation::idToken is invalid[snippets='http-request,http-response']
+=== access token 재발급
+operation::refresh token[snippets='http-request,http-response']
+=== access token 재발급시 refresh token이 null
+operation::refresh token is null[snippets='http-request,http-response']
+=== access token 재발급시 refresh token 형식이 잘못됨
+operation::refresh token is invalid[snippets='http-request,http-response']
+
+=== 멤버(me) 조회
+operation::find member[snippets='http-request,http-response']
+=== 잘못된 token으로 멤버 조회
+operation::fail to find member[snippets='http-request,http-response']
+
+=== 멤버들 조회
+operation::find members[snippets='http-request,http-response']
+
+=== 닉네임 수정
+operation::update member name[snippets='http-request,http-response']
+
+=== 프로필 수정
+operation::update member profile image[snippets='http-request,http-response']
